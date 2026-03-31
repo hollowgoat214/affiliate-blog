@@ -1,0 +1,193 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import AffiliateCard from '../components/AffiliateCard.astro';
+import ProsCons from '../components/ProsCons.astro';
+
+interface AffiliateProduct {
+  name: string;
+  description: string;
+  image: string;
+  url: string;
+  price?: string;
+  badge?: string;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  heroImage?: string;
+  heroImageAlt?: string;
+  category: string;
+  pubDate: Date;
+  updatedDate?: Date;
+  author: string;
+  affiliateProducts?: AffiliateProduct[];
+  pros?: string[];
+  cons?: string[];
+}
+
+const {
+  title,
+  description,
+  heroImage,
+  heroImageAlt,
+  category,
+  pubDate,
+  updatedDate,
+  author,
+  affiliateProducts,
+  pros,
+  cons,
+} = Astro.props;
+
+const formattedDate = pubDate.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+const formattedUpdated = updatedDate?.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  image={heroImage}
+  type="article"
+  pubDate={pubDate.toISOString()}
+>
+  <article>
+    <!-- Hero Image -->
+    {heroImage && (
+      <div class="w-full max-h-[480px] overflow-hidden bg-zinc-900">
+        <img
+          src={heroImage}
+          alt={heroImageAlt || title}
+          class="w-full h-full object-cover"
+          loading="eager"
+        />
+      </div>
+    )}
+
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <div class="max-w-3xl mx-auto">
+
+        <!-- Post Header -->
+        <header class="mb-10">
+          <a
+            href={`/category/${category}`}
+            class="inline-block text-xs font-semibold px-3 py-1 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20 mb-4 hover:bg-amber-500/20 transition-colors"
+          >
+            {category}
+          </a>
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-zinc-50 leading-tight mb-5">
+            {title}
+          </h1>
+          <p class="text-lg sm:text-xl text-zinc-400 leading-relaxed mb-6">{description}</p>
+          <div class="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-zinc-500 border-y border-[#2a2a2a] py-4">
+            <span>By <strong class="text-zinc-300 font-medium">{author}</strong></span>
+            <span class="text-zinc-700">·</span>
+            <time datetime={pubDate.toISOString()}>{formattedDate}</time>
+            {updatedDate && (
+              <>
+                <span class="text-zinc-700">·</span>
+                <span>Updated <time datetime={updatedDate.toISOString()}>{formattedUpdated}</time></span>
+              </>
+            )}
+            <a href="/disclosure" class="ml-auto text-xs text-zinc-600 hover:text-amber-500 transition-colors">
+              ⓘ Affiliate links
+            </a>
+          </div>
+        </header>
+
+        <!-- Article Body -->
+        <div class="prose prose-lg max-w-none
+          prose-headings:text-zinc-50
+          prose-headings:font-bold
+          prose-p:text-zinc-300
+          prose-p:leading-relaxed
+          prose-a:text-amber-400
+          prose-a:no-underline
+          hover:prose-a:underline
+          prose-strong:text-zinc-200
+          prose-code:text-amber-400
+          prose-code:bg-zinc-900
+          prose-code:px-1.5
+          prose-code:py-0.5
+          prose-code:rounded
+          prose-code:text-sm
+          prose-code:font-normal
+          prose-pre:bg-zinc-900
+          prose-pre:border
+          prose-pre:border-zinc-800
+          prose-blockquote:border-amber-500
+          prose-blockquote:text-zinc-400
+          prose-li:text-zinc-300
+          prose-img:rounded-xl
+          prose-hr:border-zinc-800
+          prose-table:text-zinc-300
+          prose-th:text-zinc-200
+          prose-th:border-zinc-700
+          prose-td:border-zinc-800">
+          <slot />
+        </div>
+
+        <!-- Pros & Cons -->
+        {pros && cons && pros.length > 0 && cons.length > 0 && (
+          <div class="mt-12">
+            <h2 class="text-2xl font-bold text-zinc-50 mb-4">Pros &amp; Cons</h2>
+            <ProsCons pros={pros} cons={cons} />
+          </div>
+        )}
+
+        <!-- Affiliate Products Grid -->
+        {affiliateProducts && affiliateProducts.length > 0 && (
+          <div class="mt-14">
+            <div class="flex items-center justify-between mb-2">
+              <h2 class="text-2xl font-bold text-zinc-50">Products in This Review</h2>
+            </div>
+            <p class="text-sm text-zinc-500 mb-6">
+              Some links below are affiliate links. We may earn a small commission if you buy through them — at no extra cost to you.
+              <a href="/disclosure" class="text-amber-500 hover:underline ml-1">Full disclosure →</a>
+            </p>
+            <div class="space-y-4">
+              {affiliateProducts.map((product) => (
+                <AffiliateCard
+                  name={product.name}
+                  description={product.description}
+                  image={product.image}
+                  url={product.url}
+                  price={product.price}
+                  badge={product.badge}
+                />
+              ))}
+            </div>
+          </div>
+        )}
+
+        <!-- Footer Nav -->
+        <div class="mt-16 pt-8 border-t border-[#2a2a2a] flex flex-wrap gap-3">
+          <a
+            href="/blog"
+            class="inline-flex items-center gap-2 border border-zinc-700 hover:border-amber-500 hover:text-amber-500 text-zinc-300 font-medium px-5 py-2.5 rounded-lg transition-colors text-sm"
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 12H5M12 19l-7-7 7-7" />
+            </svg>
+            All Reviews
+          </a>
+          <a
+            href={`/category/${category}`}
+            class="inline-flex items-center gap-2 border border-zinc-700 hover:border-amber-500 hover:text-amber-500 text-zinc-300 font-medium px-5 py-2.5 rounded-lg transition-colors text-sm"
+          >
+            More {category} →
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </article>
+</BaseLayout>

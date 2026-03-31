@@ -1,0 +1,90 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const lastUpdated = 'January 1, 2025';
+---
+
+<BaseLayout
+  title="Affiliate Disclosure"
+  description="ReviewHive's affiliate disclosure and FTC compliance statement. Learn how we earn commissions and how it affects our editorial content."
+>
+  <section class="py-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mx-auto">
+
+        <h1 class="text-4xl font-extrabold text-zinc-50 mb-3">Affiliate Disclosure</h1>
+        <p class="text-zinc-500 text-sm mb-10">Last updated: {lastUpdated}</p>
+
+        <div class="prose prose-lg max-w-none
+          prose-headings:text-zinc-50
+          prose-headings:font-bold
+          prose-p:text-zinc-300
+          prose-p:leading-relaxed
+          prose-a:text-amber-400
+          prose-a:no-underline
+          hover:prose-a:underline
+          prose-strong:text-zinc-200
+          prose-li:text-zinc-300
+          prose-hr:border-zinc-800">
+
+          <div class="not-prose bg-amber-500/10 border border-amber-500/20 rounded-xl p-5 mb-8">
+            <p class="text-amber-300 text-sm leading-relaxed font-medium">
+              <strong class="text-amber-400">Summary:</strong> ReviewHive participates in affiliate programs and may earn a commission when you purchase through our links. This costs you nothing extra and never influences our editorial opinions.
+            </p>
+          </div>
+
+          <h2>FTC Compliance Disclosure</h2>
+          <p>
+            In accordance with the United States Federal Trade Commission (FTC) guidelines — specifically 16 CFR Part 255: "Guides Concerning the Use of Endorsements and Testimonials in Advertising" — ReviewHive is required to disclose any material connections between this website and the companies or products we review or recommend.
+          </p>
+
+          <h2>Affiliate Program Participation</h2>
+          <p>
+            ReviewHive is a participant in the <strong>Amazon Services LLC Associates Program</strong>, an affiliate advertising program designed to provide a means for sites to earn advertising fees by advertising and linking to Amazon.com.
+          </p>
+          <p>
+            We may also participate in affiliate programs with other retailers and brands. When you click on an affiliate link on this site and make a purchase, we may earn a commission. These commissions come at <strong>no additional cost to you</strong> — the price you pay is the same whether or not you use our affiliate link.
+          </p>
+
+          <h2>How Affiliate Links Are Identified</h2>
+          <p>
+            Affiliate links on ReviewHive are typically associated with product recommendation boxes labeled "Check Price on Amazon" or similar call-to-action language. We may also include affiliate links within the body text of articles. We make reasonable efforts to identify affiliate relationships clearly.
+          </p>
+          <p>
+            Links marked with <code>rel="sponsored"</code> or <code>rel="nofollow"</code> in the source code indicate affiliate or commercial relationships.
+          </p>
+
+          <h2>Editorial Independence</h2>
+          <p>
+            The existence of affiliate relationships does <strong>not</strong> influence our editorial opinions, rankings, or recommendations in any way. We do not accept payment in exchange for positive reviews or favorable placement. Products are evaluated based on their actual performance, quality, and value.
+          </p>
+          <p>
+            If we receive a product for free from a manufacturer or retailer for review purposes, we will disclose this within the relevant article. Free products do not guarantee a positive review.
+          </p>
+
+          <h2>Accuracy of Information</h2>
+          <p>
+            Prices, product specifications, and availability are subject to change. While we make every effort to keep our reviews accurate and up to date, we cannot guarantee that all information reflects current offerings. Always verify pricing and product details on the retailer's website before making a purchase.
+          </p>
+
+          <h2>No Responsibility for Third-Party Sites</h2>
+          <p>
+            ReviewHive is not responsible for the content, privacy policies, or practices of any third-party websites, including Amazon.com or any other retailer to which we may link. We encourage you to review the privacy policies of any external sites you visit.
+          </p>
+
+          <h2>Contact</h2>
+          <p>
+            If you have questions about our affiliate relationships or this disclosure, please contact us at <a href="mailto:hello@yoursite.com">hello@yoursite.com</a>.
+          </p>
+
+          <hr />
+
+          <p class="text-sm text-zinc-500">
+            This disclosure is provided in compliance with the FTC's regulations on endorsements and testimonials (16 CFR Part 255) and applicable laws governing affiliate marketing disclosures. By using this website, you acknowledge that you have read and understood this disclosure.
+          </p>
+
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

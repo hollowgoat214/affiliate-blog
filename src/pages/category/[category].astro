@@ -1,0 +1,110 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const allPosts = await getCollection('blog');
+  const categories = ['Tech', 'Trending', 'Gear', 'Lifestyle'] as const;
+
+  return categories.map((category) => {
+    const posts = allPosts
+      .filter((p) => p.data.category === category)
+      .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+    return {
+      params: { category },
+      props: { category, posts },
+    };
+  });
+}
+
+const { category, posts } = Astro.props;
+
+const categoryMeta: Record<string, { description: string; icon: string }> = {
+  Tech: {
+    description: 'Reviews and buying guides for gadgets, software, audio gear, and everything else digital.',
+    icon: '💻',
+  },
+  Trending: {
+    description: "The products everyone's talking about. We cut through the hype to tell you what's actually worth it.",
+    icon: '🔥',
+  },
+  Gear: {
+    description: 'Tools, accessories, bags, and everyday carry items reviewed for durability and real-world use.',
+    icon: '🎒',
+  },
+  Lifestyle: {
+    description: 'Home, fitness, health, and quality-of-life products that make the everyday a little better.',
+    icon: '✨',
+  },
+};
+
+const meta = categoryMeta[category];
+---
+
+<BaseLayout
+  title={`${category} Reviews`}
+  description={meta.description}
+>
+  <section class="py-12">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <header class="mb-10">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="text-4xl" aria-hidden="true">{meta.icon}</span>
+          <h1 class="text-4xl font-extrabold text-zinc-50">{category}</h1>
+        </div>
+        <p class="text-zinc-400 text-lg max-w-2xl">{meta.description}</p>
+
+        <!-- All categories nav -->
+        <div class="flex flex-wrap gap-2 mt-6">
+          <a
+            href="/blog"
+            class="px-4 py-1.5 rounded-full border border-zinc-700 text-zinc-400 hover:border-amber-500 hover:text-amber-400 text-sm font-medium transition-colors"
+          >
+            All
+          </a>
+          {['Tech', 'Trending', 'Gear', 'Lifestyle'].map((cat) => (
+            <a
+              href={`/category/${cat}`}
+              class={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${
+                cat === category
+                  ? 'bg-amber-500 text-black font-semibold'
+                  : 'border border-zinc-700 text-zinc-400 hover:border-amber-500 hover:text-amber-400'
+              }`}
+            >
+              {cat}
+            </a>
+          ))}
+        </div>
+      </header>
+
+      {posts.length > 0 ? (
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {posts.map((post) => (
+            <PostCard
+              title={post.data.title}
+              description={post.data.description}
+              slug={post.slug}
+              heroImage={post.data.heroImage}
+              heroImageAlt={post.data.heroImageAlt}
+              category={post.data.category}
+              pubDate={post.data.pubDate}
+            />
+          ))}
+        </div>
+      ) : (
+        <div class="text-center py-24 text-zinc-500">
+          <div class="text-5xl mb-4">{meta.icon}</div>
+          <p class="text-lg font-medium text-zinc-400 mb-2">No posts yet in {category}.</p>
+          <p class="text-sm">Check back soon — we're working on it.</p>
+          <a href="/blog" class="mt-6 inline-block text-amber-500 hover:text-amber-400 text-sm font-medium transition-colors">
+            ← Browse all reviews
+          </a>
+        </div>
+      )}
+
+    </div>
+  </section>
+</BaseLayout>
