@@ -3,43 +3,35 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import PostCard from '../../components/PostCard.astro';
 import { getCollection } from 'astro:content';
 
-const allPosts = await getCollection('blog');
-const posts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
-
-const categories = ['Tech', 'Trending', 'Gear', 'Lifestyle'] as const;
+const all   = await getCollection('blog');
+const posts = all.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const cats  = ['Tech', 'Trending', 'Gear', 'Lifestyle'] as const;
 ---
 
 <BaseLayout
   title="All Reviews"
-  description="Browse all product reviews, buying guides, and recommendations from ReviewHive."
+  description="Every post on Tumbleweed0220 — product reviews, buying guides, and honest takes."
 >
-  <section class="py-12">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+  <section class="py-14">
+    <div class="container">
 
-      <header class="mb-10">
-        <h1 class="text-4xl font-extrabold text-zinc-50 mb-3">All Reviews</h1>
-        <p class="text-zinc-400 text-lg">
-          {posts.length} article{posts.length !== 1 ? 's' : ''} and growing.
+      <header class="mb-10 reveal">
+        <h1 class="font-black text-4xl tracking-tight mb-2" style="color: #f0f0f0;">All Reviews</h1>
+        <p style="color: var(--text-muted);" class="text-base">
+          {posts.length} post{posts.length !== 1 ? 's' : ''}.
         </p>
 
-        <!-- Category Filter Links -->
+        <!-- Category tabs -->
         <div class="flex flex-wrap gap-2 mt-5">
-          <a href="/blog" class="px-4 py-1.5 rounded-full bg-amber-500 text-black text-sm font-semibold">
-            All
-          </a>
-          {categories.map((cat) => (
-            <a
-              href={`/category/${cat}`}
-              class="px-4 py-1.5 rounded-full border border-zinc-700 text-zinc-400 hover:border-amber-500 hover:text-amber-400 text-sm font-medium transition-colors"
-            >
-              {cat}
-            </a>
+          <a href="/blog" class="tag" style="background: var(--accent); color: #000; border-color: var(--accent);">All</a>
+          {cats.map((c) => (
+            <a href={`/category/${c}`} class="tag" style="background: transparent; color: var(--text-muted);">{c}</a>
           ))}
         </div>
       </header>
 
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {posts.map((post) => (
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+        {posts.map((post, i) => (
           <PostCard
             title={post.data.title}
             description={post.data.description}
@@ -48,15 +40,11 @@ const categories = ['Tech', 'Trending', 'Gear', 'Lifestyle'] as const;
             heroImageAlt={post.data.heroImageAlt}
             category={post.data.category}
             pubDate={post.data.pubDate}
+            placeholder={post.data.placeholder}
+            index={i}
           />
         ))}
       </div>
-
-      {posts.length === 0 && (
-        <div class="text-center py-24 text-zinc-500">
-          <p class="text-lg">No posts yet. Check back soon.</p>
-        </div>
-      )}
 
     </div>
   </section>

@@ -1,43 +1,45 @@
 ---
 const year = new Date().getFullYear();
-
-const categories = ['Tech', 'Trending', 'Gear', 'Lifestyle'];
+const cats  = ['Tech', 'Trending', 'Gear', 'Lifestyle'];
 ---
 
-<footer class="border-t border-[#2a2a2a] mt-16 bg-[#0c0c0c]">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<footer style="border-top: 1px solid #1a1a1a; margin-top: 6rem; background: #080808;">
+  <div class="container py-14">
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
 
       <!-- Brand -->
       <div class="lg:col-span-2">
-        <a href="/" class="flex items-center gap-2 mb-4 group w-fit">
-          <svg width="22" height="22" viewBox="0 0 32 32" fill="none" class="text-amber-500">
-            <polygon points="16,2 30,9 30,23 16,30 2,23 2,9" fill="currentColor" opacity="0.2" stroke="currentColor" stroke-width="1.5"/>
-            <polygon points="16,8 24,12 24,20 16,24 8,20 8,12" fill="currentColor" opacity="0.5"/>
-            <polygon points="16,12 20,14 20,18 16,20 12,18 12,14" fill="currentColor"/>
-          </svg>
-          <span class="font-bold text-zinc-100 group-hover:text-amber-400 transition-colors">ReviewHive</span>
+        <a href="/" class="flex items-center gap-2.5 mb-4 w-fit group">
+          <div class="w-6 h-6 flex-shrink-0">
+            <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+              <circle cx="14" cy="14" r="13" stroke="#f59e0b" stroke-width="1.5" opacity="0.3"/>
+              <circle cx="14" cy="14" r="9"  stroke="#f59e0b" stroke-width="1.5" opacity="0.6"/>
+              <circle cx="14" cy="14" r="5"  fill="#f59e0b"/>
+            </svg>
+          </div>
+          <span class="font-black text-sm tracking-tight text-zinc-400 group-hover:text-zinc-200 transition-colors">
+            TUMBLEWEED<span class="text-amber-500">0220</span>
+          </span>
         </a>
-        <p class="text-zinc-500 text-sm leading-relaxed max-w-xs">
-          One person's honest takes on tech, gear, and lifestyle products. No editorial team. No sponsored rankings.
+        <p class="text-zinc-600 text-sm leading-relaxed max-w-xs">
+          Solo affiliate blog. One person's honest takes on tech, gear, and things worth buying.
         </p>
-        <!-- Social Icons -->
-        <div class="flex items-center gap-3 mt-5">
-          <a href="#" aria-label="Follow on X / Twitter" class="text-zinc-600 hover:text-amber-500 transition-colors p-1.5">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+        <div class="flex items-center gap-2 mt-5">
+          <a href="#" aria-label="X / Twitter" class="p-2 rounded-md text-zinc-700 hover:text-amber-500 hover:bg-amber-500/5 transition-all">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
               <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
             </svg>
           </a>
-          <a href="#" aria-label="Follow on Instagram" class="text-zinc-600 hover:text-amber-500 transition-colors p-1.5">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <a href="#" aria-label="Instagram" class="p-2 rounded-md text-zinc-700 hover:text-amber-500 hover:bg-amber-500/5 transition-all">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <rect x="2" y="2" width="20" height="20" rx="5"/>
               <circle cx="12" cy="12" r="4"/>
               <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
             </svg>
           </a>
-          <a href="#" aria-label="Subscribe on YouTube" class="text-zinc-600 hover:text-amber-500 transition-colors p-1.5">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.54 3.54 12 3.54 12 3.54s-7.54 0-9.38.51A3.02 3.02 0 0 0 .5 6.19C0 8.04 0 12 0 12s0 3.96.5 5.81a3.02 3.02 0 0 0 2.12 2.14C4.46 20.46 12 20.46 12 20.46s7.54 0 9.38-.51a3.02 3.02 0 0 0 2.12-2.14C24 15.96 24 12 24 12s0-3.96-.5-5.81zM9.54 15.57V8.43L15.82 12l-6.28 3.57z"/>
+          <a href="#" aria-label="YouTube" class="p-2 rounded-md text-zinc-700 hover:text-amber-500 hover:bg-amber-500/5 transition-all">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.54 3.54 12 3.54 12 3.54s-7.54 0-9.38.51A3.02 3.02 0 0 0 .5 6.19C0 8.04 0 12 0 12s0 3.96.5 5.81a3.02 3.02 0 0 0 2.12 2.14c1.84.51 9.38.51 9.38.51s7.54 0 9.38-.51a3.02 3.02 0 0 0 2.12-2.14C24 15.96 24 12 24 12s0-3.96-.5-5.81zM9.54 15.57V8.43L15.82 12l-6.28 3.57z"/>
             </svg>
           </a>
         </div>
@@ -45,37 +47,35 @@ const categories = ['Tech', 'Trending', 'Gear', 'Lifestyle'];
 
       <!-- Categories -->
       <div>
-        <h4 class="text-xs font-semibold text-zinc-400 uppercase tracking-widest mb-4">Categories</h4>
+        <p class="text-xs font-bold text-zinc-600 uppercase tracking-widest mb-4">Categories</p>
         <ul class="space-y-2.5">
-          {categories.map((cat) => (
+          {cats.map((c) => (
             <li>
-              <a href={`/category/${cat}`} class="text-zinc-500 hover:text-amber-400 text-sm transition-colors">
-                {cat}
+              <a href={`/category/${c}`} class="text-zinc-600 hover:text-amber-400 text-sm transition-colors">
+                {c}
               </a>
             </li>
           ))}
         </ul>
       </div>
 
-      <!-- Site Links -->
+      <!-- Pages -->
       <div>
-        <h4 class="text-xs font-semibold text-zinc-400 uppercase tracking-widest mb-4">Site</h4>
+        <p class="text-xs font-bold text-zinc-600 uppercase tracking-widest mb-4">Site</p>
         <ul class="space-y-2.5">
-          <li><a href="/blog" class="text-zinc-500 hover:text-amber-400 text-sm transition-colors">All Reviews</a></li>
-          <li><a href="/about" class="text-zinc-500 hover:text-amber-400 text-sm transition-colors">About</a></li>
-          <li><a href="/disclosure" class="text-zinc-500 hover:text-amber-400 text-sm transition-colors">Affiliate Disclosure</a></li>
+          <li><a href="/blog"        class="text-zinc-600 hover:text-amber-400 text-sm transition-colors">All Posts</a></li>
+          <li><a href="/about"       class="text-zinc-600 hover:text-amber-400 text-sm transition-colors">About</a></li>
+          <li><a href="/disclosure"  class="text-zinc-600 hover:text-amber-400 text-sm transition-colors">Disclosure</a></li>
         </ul>
       </div>
-
     </div>
 
-    <!-- Bottom Bar -->
-    <div class="border-t border-[#2a2a2a] pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-zinc-600">
-      <p>&copy; {year} ReviewHive. All rights reserved.</p>
-      <p>
+    <div style="border-top: 1px solid #1a1a1a;" class="pt-6 flex flex-col sm:flex-row justify-between items-center gap-3">
+      <p class="text-zinc-700 text-xs">&copy; {year} Tumbleweed0220. All rights reserved.</p>
+      <p class="text-zinc-700 text-xs">
         <a href="/disclosure" class="hover:text-amber-500 transition-colors">Affiliate Disclosure</a>
         {' · '}
-        This site contains affiliate links. We may earn a commission at no cost to you.
+        This site earns commissions on purchases.
       </p>
     </div>
   </div>

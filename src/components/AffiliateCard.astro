@@ -7,48 +7,45 @@ interface Props {
   price?: string;
   badge?: string;
 }
-
 const { name, description, image, url, price, badge } = Astro.props;
 ---
 
-<div class="not-prose flex flex-col sm:flex-row border border-amber-500/20 bg-[#161616] rounded-xl overflow-hidden hover:border-amber-500/40 transition-colors duration-300">
-  <!-- Product Image -->
-  <div class="sm:w-44 flex-shrink-0 bg-[#1e1e1e] flex items-center justify-center p-4 border-b sm:border-b-0 sm:border-r border-amber-500/10">
+<div class="affiliate-card not-prose flex flex-col sm:flex-row">
+  <!-- Image -->
+  <div class="sm:w-44 flex-shrink-0 flex items-center justify-center p-5" style="background: #0e0e0e; border-right: 1px solid rgba(245,158,11,0.1);">
     <img
       src={image}
       alt={name}
       width="160"
       height="160"
-      class="w-32 h-32 sm:w-36 sm:h-36 object-contain"
+      class="w-32 h-32 object-contain"
       loading="lazy"
       decoding="async"
     />
   </div>
 
-  <!-- Product Info -->
+  <!-- Details -->
   <div class="p-5 flex flex-col justify-between flex-1 min-w-0">
     <div>
       {badge && (
-        <span class="inline-block text-xs font-bold px-2.5 py-0.5 rounded-md bg-amber-500 text-black mb-3 uppercase tracking-wide">
+        <span class="inline-block text-xs font-black px-2.5 py-0.5 rounded mb-2.5 uppercase tracking-widest" style="background: var(--accent); color: #000;">
           {badge}
         </span>
       )}
-      <h4 class="font-bold text-zinc-100 text-lg leading-tight mb-1">{name}</h4>
-      {price && (
-        <p class="text-amber-400 font-semibold text-base mb-2">{price}</p>
-      )}
-      <p class="text-zinc-400 text-sm leading-relaxed">{description}</p>
+      <h4 class="font-bold text-lg mb-0.5" style="color: var(--text);">{name}</h4>
+      {price && <p class="font-semibold mb-2 text-sm" style="color: var(--accent);">{price}</p>}
+      <p class="text-sm leading-relaxed" style="color: var(--text-muted);">{description}</p>
     </div>
 
     <a
       href={url}
       target="_blank"
       rel="noopener noreferrer nofollow sponsored"
-      class="mt-4 inline-flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-400 active:bg-amber-600 text-black font-bold px-5 py-2.5 rounded-lg transition-colors text-sm w-full sm:w-auto"
+      class="btn-primary mt-4 self-start"
     >
       Check Price on Amazon
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3" />
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/>
       </svg>
     </a>
   </div>

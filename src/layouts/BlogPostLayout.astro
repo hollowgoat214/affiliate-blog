@@ -21,173 +21,222 @@ interface Props {
   pubDate: Date;
   updatedDate?: Date;
   author: string;
+  placeholder?: boolean;
   affiliateProducts?: AffiliateProduct[];
   pros?: string[];
   cons?: string[];
 }
 
 const {
-  title,
-  description,
-  heroImage,
-  heroImageAlt,
-  category,
-  pubDate,
-  updatedDate,
-  author,
-  affiliateProducts,
-  pros,
-  cons,
+  title, description, heroImage, heroImageAlt,
+  category, pubDate, updatedDate, author,
+  placeholder = false, affiliateProducts, pros, cons,
 } = Astro.props;
 
-const formattedDate = pubDate.toLocaleDateString('en-US', {
-  year: 'numeric',
-  month: 'long',
-  day: 'numeric',
-});
-const formattedUpdated = updatedDate?.toLocaleDateString('en-US', {
-  year: 'numeric',
-  month: 'long',
-  day: 'numeric',
-});
+const fmt  = (d: Date) => d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 ---
 
-<BaseLayout
-  title={title}
-  description={description}
-  image={heroImage}
-  type="article"
-  pubDate={pubDate.toISOString()}
->
+<BaseLayout title={title} description={description} image={heroImage} type="article" pubDate={pubDate.toISOString()}>
   <article>
+
     <!-- Hero Image -->
     {heroImage && (
-      <div class="w-full max-h-[480px] overflow-hidden bg-zinc-900">
+      <div class="w-full overflow-hidden" style="max-height: 480px; background: #0e0e0e;">
         <img
           src={heroImage}
           alt={heroImageAlt || title}
           class="w-full h-full object-cover"
+          style="max-height: 480px;"
           loading="eager"
         />
       </div>
     )}
 
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-      <div class="max-w-3xl mx-auto">
+    <div class="container py-12">
+      <div class="max-w-[700px] mx-auto">
 
-        <!-- Post Header -->
+        <!-- Placeholder banner -->
+        {placeholder && (
+          <div class="placeholder-banner">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--accent); flex-shrink: 0;">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+            </svg>
+            <span><strong>Placeholder post.</strong> This is demo content to show how the site looks. Replace with a real review when you're ready.</span>
+          </div>
+        )}
+
+        <!-- Post header -->
         <header class="mb-10">
-          <a
-            href={`/category/${category}`}
-            class="inline-block text-xs font-semibold px-3 py-1 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20 mb-4 hover:bg-amber-500/20 transition-colors"
-          >
-            {category}
-          </a>
-          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-zinc-50 leading-tight mb-5">
+          <div class="flex items-center gap-2 mb-5">
+            <a href={`/category/${category}`} class="tag">{category}</a>
+          </div>
+
+          <h1 class="font-black leading-tight mb-4 tracking-tight" style="font-size: clamp(1.75rem, 4vw, 2.75rem); color: #f0f0f0; line-height: 1.15;">
             {title}
           </h1>
-          <p class="text-lg sm:text-xl text-zinc-400 leading-relaxed mb-6">{description}</p>
-          <div class="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-zinc-500 border-y border-[#2a2a2a] py-4">
-            <span>By <strong class="text-zinc-300 font-medium">{author}</strong></span>
-            <span class="text-zinc-700">·</span>
-            <time datetime={pubDate.toISOString()}>{formattedDate}</time>
+
+          <p class="text-lg leading-relaxed mb-6" style="color: var(--text-muted);">{description}</p>
+
+          <div class="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs py-4" style="color: var(--text-dim); border-top: 1px solid #1a1a1a; border-bottom: 1px solid #1a1a1a;">
+            <span style="color: #555;">{author}</span>
+            <span style="color: #2a2a2a;">·</span>
+            <time datetime={pubDate.toISOString()}>{fmt(pubDate)}</time>
             {updatedDate && (
               <>
-                <span class="text-zinc-700">·</span>
-                <span>Updated <time datetime={updatedDate.toISOString()}>{formattedUpdated}</time></span>
+                <span style="color: #2a2a2a;">·</span>
+                <span>Updated <time datetime={updatedDate.toISOString()}>{fmt(updatedDate)}</time></span>
               </>
             )}
-            <a href="/disclosure" class="ml-auto text-xs text-zinc-600 hover:text-amber-500 transition-colors">
+            <a href="/disclosure" class="ml-auto text-xs transition-colors" style="color: #333;" onmouseover="this.style.color='#f59e0b'" onmouseout="this.style.color='#333'">
               ⓘ Affiliate links
             </a>
           </div>
         </header>
 
-        <!-- Article Body -->
-        <div class="prose prose-lg max-w-none
-          prose-headings:text-zinc-50
-          prose-headings:font-bold
-          prose-p:text-zinc-300
-          prose-p:leading-relaxed
-          prose-a:text-amber-400
-          prose-a:no-underline
-          hover:prose-a:underline
-          prose-strong:text-zinc-200
-          prose-code:text-amber-400
-          prose-code:bg-zinc-900
-          prose-code:px-1.5
-          prose-code:py-0.5
-          prose-code:rounded
-          prose-code:text-sm
-          prose-code:font-normal
-          prose-pre:bg-zinc-900
-          prose-pre:border
-          prose-pre:border-zinc-800
-          prose-blockquote:border-amber-500
-          prose-blockquote:text-zinc-400
-          prose-li:text-zinc-300
-          prose-img:rounded-xl
-          prose-hr:border-zinc-800
-          prose-table:text-zinc-300
-          prose-th:text-zinc-200
-          prose-th:border-zinc-700
-          prose-td:border-zinc-800">
+        <!-- Article body -->
+        <div class="post-body">
           <slot />
         </div>
 
-        <!-- Pros & Cons -->
+        <!-- Pros / Cons -->
         {pros && cons && pros.length > 0 && cons.length > 0 && (
           <div class="mt-12">
-            <h2 class="text-2xl font-bold text-zinc-50 mb-4">Pros &amp; Cons</h2>
+            <h2 class="font-black text-xl mb-5 tracking-tight" style="color: #e8e8e8;">Pros &amp; Cons</h2>
             <ProsCons pros={pros} cons={cons} />
           </div>
         )}
 
-        <!-- Affiliate Products Grid -->
+        <!-- Affiliate products -->
         {affiliateProducts && affiliateProducts.length > 0 && (
           <div class="mt-14">
-            <div class="flex items-center justify-between mb-2">
-              <h2 class="text-2xl font-bold text-zinc-50">Products in This Review</h2>
+            <div class="flex items-end justify-between mb-2">
+              <h2 class="font-black text-xl tracking-tight" style="color: #e8e8e8;">Products in this review</h2>
             </div>
-            <p class="text-sm text-zinc-500 mb-6">
-              Some links below are affiliate links. We may earn a small commission if you buy through them — at no extra cost to you.
-              <a href="/disclosure" class="text-amber-500 hover:underline ml-1">Full disclosure →</a>
+            <p class="text-xs mb-6" style="color: var(--text-dim);">
+              Affiliate links — I earn a small commission if you buy.
+              <a href="/disclosure" class="ml-1 transition-colors" style="color: var(--accent);">Full disclosure →</a>
             </p>
             <div class="space-y-4">
-              {affiliateProducts.map((product) => (
-                <AffiliateCard
-                  name={product.name}
-                  description={product.description}
-                  image={product.image}
-                  url={product.url}
-                  price={product.price}
-                  badge={product.badge}
-                />
-              ))}
+              {affiliateProducts.map((p) => <AffiliateCard {...p} />)}
             </div>
           </div>
         )}
 
-        <!-- Footer Nav -->
-        <div class="mt-16 pt-8 border-t border-[#2a2a2a] flex flex-wrap gap-3">
-          <a
-            href="/blog"
-            class="inline-flex items-center gap-2 border border-zinc-700 hover:border-amber-500 hover:text-amber-500 text-zinc-300 font-medium px-5 py-2.5 rounded-lg transition-colors text-sm"
-          >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M19 12H5M12 19l-7-7 7-7" />
-            </svg>
-            All Reviews
-          </a>
-          <a
-            href={`/category/${category}`}
-            class="inline-flex items-center gap-2 border border-zinc-700 hover:border-amber-500 hover:text-amber-500 text-zinc-300 font-medium px-5 py-2.5 rounded-lg transition-colors text-sm"
-          >
-            More {category} →
-          </a>
+        <!-- Nav -->
+        <div class="mt-16 pt-8 flex flex-wrap gap-3" style="border-top: 1px solid #1a1a1a;">
+          <a href="/blog" class="btn-ghost">← All Reviews</a>
+          <a href={`/category/${category}`} class="btn-ghost">More {category} →</a>
         </div>
 
       </div>
     </div>
   </article>
 </BaseLayout>
+
+<style>
+/* Article typography */
+.post-body :global(h2) {
+  font-size: 1.4rem;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  color: #efefef;
+  margin-top: 2.5rem;
+  margin-bottom: 0.875rem;
+  line-height: 1.2;
+}
+.post-body :global(h3) {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #e0e0e0;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
+.post-body :global(p) {
+  color: #aaa;
+  line-height: 1.8;
+  margin-bottom: 1.25rem;
+  font-size: 1rem;
+}
+.post-body :global(a) {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(245,158,11,0.3);
+  transition: border-color 0.2s, color 0.2s;
+}
+.post-body :global(a:hover) {
+  color: var(--accent-2);
+  border-bottom-color: var(--accent);
+}
+.post-body :global(strong) { color: #d0d0d0; font-weight: 700; }
+.post-body :global(em)     { color: #bbb; }
+.post-body :global(ul), .post-body :global(ol) {
+  margin-bottom: 1.25rem;
+  padding-left: 1.5rem;
+}
+.post-body :global(li) {
+  color: #aaa;
+  line-height: 1.75;
+  margin-bottom: 0.4rem;
+}
+.post-body :global(blockquote) {
+  border-left: 3px solid var(--accent);
+  padding-left: 1.25rem;
+  margin: 1.5rem 0;
+  color: #777;
+  font-style: italic;
+}
+.post-body :global(code) {
+  background: #111;
+  color: var(--accent);
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+  font-size: 0.875em;
+  border: 1px solid #222;
+}
+.post-body :global(pre) {
+  background: #0e0e0e;
+  border: 1px solid #222;
+  border-radius: 10px;
+  padding: 1.25rem;
+  overflow-x: auto;
+  margin-bottom: 1.5rem;
+}
+.post-body :global(pre code) {
+  background: none;
+  border: none;
+  padding: 0;
+  color: #ccc;
+}
+.post-body :global(hr) {
+  border: none;
+  border-top: 1px solid #1f1f1f;
+  margin: 2.5rem 0;
+}
+.post-body :global(table) {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+}
+.post-body :global(th) {
+  text-align: left;
+  font-weight: 700;
+  color: #ccc;
+  padding: 0.6rem 0.875rem;
+  border-bottom: 1px solid #2a2a2a;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.post-body :global(td) {
+  padding: 0.6rem 0.875rem;
+  color: #999;
+  border-bottom: 1px solid #1a1a1a;
+}
+.post-body :global(tr:last-child td) { border-bottom: none; }
+.post-body :global(img) {
+  border-radius: 10px;
+  margin: 1.5rem 0;
+  max-width: 100%;
+}
+</style>

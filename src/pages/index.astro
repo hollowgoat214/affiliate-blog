@@ -3,145 +3,155 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PostCard from '../components/PostCard.astro';
 import { getCollection } from 'astro:content';
 
-const allPosts = await getCollection('blog');
-const sorted = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const all      = await getCollection('blog');
+const sorted   = all.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 const featured = sorted.filter((p) => p.data.featured).slice(0, 3);
-const recent = sorted.slice(0, 6);
+const recent   = sorted.slice(0, 6);
 
-const categories = [
-  {
-    name: 'Tech',
-    description: 'Gadgets, software, and everything digital',
-    icon: '💻',
-    color: 'from-blue-950/50 to-transparent',
-    border: 'hover:border-blue-500/30',
-  },
-  {
-    name: 'Trending',
-    description: "What everyone's buying right now",
-    icon: '🔥',
-    color: 'from-orange-950/50 to-transparent',
-    border: 'hover:border-orange-500/30',
-  },
-  {
-    name: 'Gear',
-    description: 'Tools, accessories, and everyday carry',
-    icon: '🎒',
-    color: 'from-violet-950/50 to-transparent',
-    border: 'hover:border-violet-500/30',
-  },
-  {
-    name: 'Lifestyle',
-    description: 'Home, health, and quality-of-life upgrades',
-    icon: '✨',
-    color: 'from-emerald-950/50 to-transparent',
-    border: 'hover:border-emerald-500/30',
-  },
+const cats = [
+  { name: 'Tech',      icon: '💻', blurb: 'Gadgets, audio, and everything digital' },
+  { name: 'Trending',  icon: '🔥', blurb: "What's worth the hype right now" },
+  { name: 'Gear',      icon: '🎒', blurb: 'Tools, accessories, and everyday carry' },
+  { name: 'Lifestyle', icon: '✦',  blurb: 'Home, health, and quality-of-life picks' },
 ];
 ---
 
 <BaseLayout
-  title="Honest Product Reviews"
-  description="Independent product reviews and curated picks across tech, gear, trending items, and lifestyle. Find exactly what's worth buying."
+  title="Home"
+  description="Tumbleweed0220 — solo affiliate blog. Honest product takes across tech, gear, and lifestyle."
 >
 
-  <!-- Hero -->
-  <section class="relative overflow-hidden border-b border-[#2a2a2a]">
-    <div class="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_-20%,rgba(245,158,11,0.08),transparent)]" aria-hidden="true"></div>
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28 relative">
-      <div class="max-w-2xl">
-        <div class="inline-flex items-center gap-2 text-xs font-semibold px-3 py-1.5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20 mb-6">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
-          Product Reviews &amp; Recommendations
+  <!-- ─── Hero ─────────────────────────────────────────────────── -->
+  <section class="relative overflow-hidden" style="border-bottom: 1px solid #1a1a1a;">
+    <!-- Glow -->
+    <div class="glow-orb" style="width: 600px; height: 600px; background: radial-gradient(circle, rgba(245,158,11,0.09) 0%, transparent 70%); top: -200px; left: -100px;"></div>
+    <div class="glow-orb" style="width: 300px; height: 300px; background: radial-gradient(circle, rgba(245,158,11,0.06) 0%, transparent 70%); top: 100px; right: 0; animation-delay: 2s;"></div>
+
+    <div class="container relative py-24 md:py-36">
+      <div class="reveal max-w-3xl">
+        <!-- Eyebrow -->
+        <div class="inline-flex items-center gap-2 mb-6 text-xs font-bold uppercase tracking-widest" style="color: var(--accent);">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse inline-block"></span>
+          Solo Affiliate Blog
         </div>
-        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-zinc-50 leading-[1.1] mb-6">
-          Find the <span class="text-amber-500">right product.</span><br />
-          Skip the noise.
+
+        <!-- Headline -->
+        <h1 class="font-black leading-[1.05] mb-6 tracking-tight" style="font-size: clamp(2.4rem, 6vw, 4.5rem); color: #f0f0f0;">
+          Find what's actually<br />
+          <span style="color: var(--accent);">worth buying.</span>
         </h1>
-        <p class="text-lg sm:text-xl text-zinc-400 leading-relaxed mb-8 max-w-lg">
-          Honest, in-depth reviews and curated picks across tech, gear, and lifestyle. No fluff — just what's actually worth your money.
+
+        <p class="text-lg leading-relaxed mb-8 max-w-xl" style="color: var(--text-muted);">
+          No editorial team. No brand deals. One person's honest take on tech, gear, and the stuff that earns a place in your life.
         </p>
+
         <div class="flex flex-wrap gap-3">
-          <a
-            href="/blog"
-            class="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-400 active:bg-amber-600 text-black font-bold px-6 py-3 rounded-lg transition-colors text-base"
-          >
-            Browse All Reviews
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7" />
+          <a href="/blog" class="btn-primary text-base px-6 py-3">
+            Browse Reviews
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/>
             </svg>
           </a>
-          <a
-            href="/category/Tech"
-            class="inline-flex items-center gap-2 border border-zinc-700 hover:border-amber-500 hover:text-amber-500 text-zinc-300 font-semibold px-6 py-3 rounded-lg transition-colors text-base"
-          >
-            Explore Tech
-          </a>
+          <a href="/about" class="btn-ghost text-base px-6 py-3">About this site</a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Featured Posts -->
+  <!-- ─── Featured (asymmetric grid) ──────────────────────────── -->
   {featured.length > 0 && (
-    <section class="py-16">
-      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center justify-between mb-8">
-          <h2 class="text-2xl font-bold text-zinc-100">Featured Reviews</h2>
-          <a href="/blog" class="text-amber-500 hover:text-amber-400 text-sm font-medium transition-colors">
-            View all →
+    <section class="py-16" style="border-bottom: 1px solid #1a1a1a;">
+      <div class="container">
+        <div class="flex items-center justify-between mb-8 reveal">
+          <h2 class="font-black text-xl tracking-tight" style="color: #e0e0e0;">Featured</h2>
+          <a href="/blog" class="text-sm font-semibold transition-colors" style="color: var(--text-dim);" onmouseover="this.style.color='#f59e0b'" onmouseout="this.style.color='var(--text-dim)'">
+            All posts →
           </a>
         </div>
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {featured.map((post) => (
-            <PostCard
-              title={post.data.title}
-              description={post.data.description}
-              slug={post.slug}
-              heroImage={post.data.heroImage}
-              heroImageAlt={post.data.heroImageAlt}
-              category={post.data.category}
-              pubDate={post.data.pubDate}
-              featured={post.data.featured}
-            />
-          ))}
+
+        <!-- Big + 2 stacked layout -->
+        <div class="grid grid-cols-1 lg:grid-cols-5 gap-5">
+          {/* First post: large */}
+          {featured[0] && (
+            <article class="lg:col-span-3 post-card reveal group" style="min-height: 380px;">
+              {featured[0].data.heroImage && (
+                <a href={`/blog/${featured[0].slug}`} class="post-card-img-wrap block relative" style="aspect-ratio: 16/9;">
+                  <img src={featured[0].data.heroImage} alt={featured[0].data.heroImageAlt || featured[0].data.title} width="800" height="450" loading="eager" class="w-full h-full object-cover"/>
+                  {featured[0].data.placeholder && (
+                    <div class="absolute top-3 right-3"><span class="tag-placeholder">DEMO</span></div>
+                  )}
+                </a>
+              )}
+              <div class="p-6 flex flex-col flex-1">
+                <div class="flex items-center gap-2 mb-3">
+                  <a href={`/category/${featured[0].data.category}`} class="tag">{featured[0].data.category}</a>
+                  <time class="text-xs ml-auto" style="color: var(--text-dim);">
+                    {featured[0].data.pubDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                  </time>
+                </div>
+                <h3 class="font-black text-xl leading-snug mb-2 group-hover:text-amber-400 transition-colors" style="color: #e8e8e8;">
+                  <a href={`/blog/${featured[0].slug}`}>{featured[0].data.title}</a>
+                </h3>
+                <p class="text-sm leading-relaxed mb-4 flex-1" style="color: var(--text-muted);">{featured[0].data.description}</p>
+                <a href={`/blog/${featured[0].slug}`} class="text-sm font-bold transition-colors w-fit" style="color: var(--accent);">Read →</a>
+              </div>
+            </article>
+          )}
+
+          {/* Posts 2 + 3: stacked */}
+          <div class="lg:col-span-2 flex flex-col gap-5">
+            {featured.slice(1, 3).map((post, i) => (
+              <PostCard
+                title={post.data.title}
+                description={post.data.description}
+                slug={post.slug}
+                heroImage={post.data.heroImage}
+                heroImageAlt={post.data.heroImageAlt}
+                category={post.data.category}
+                pubDate={post.data.pubDate}
+                placeholder={post.data.placeholder}
+                index={i + 1}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </section>
   )}
 
-  <!-- Categories -->
-  <section class="py-16 border-t border-[#2a2a2a]">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h2 class="text-2xl font-bold text-zinc-100 mb-8">Browse by Category</h2>
-      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {categories.map((cat) => (
+  <!-- ─── Categories ───────────────────────────────────────────── -->
+  <section class="py-16" style="border-bottom: 1px solid #1a1a1a;">
+    <div class="container">
+      <h2 class="font-black text-xl tracking-tight mb-8 reveal" style="color: #e0e0e0;">Categories</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+        {cats.map((cat, i) => (
           <a
             href={`/category/${cat.name}`}
-            class={`group bg-[#161616] border border-[#2a2a2a] ${cat.border} rounded-xl p-6 transition-all duration-300 bg-gradient-to-br ${cat.color}`}
+            class={`reveal reveal-delay-${i + 1} group rounded-xl p-5 transition-all duration-300`}
+            style="background: var(--surface); border: 1px solid var(--border);"
+            onmouseover="this.style.borderColor='rgba(245,158,11,0.3)'; this.style.background='#161616';"
+            onmouseout="this.style.borderColor='var(--border)'; this.style.background='var(--surface)';"
           >
-            <div class="text-3xl mb-3">{cat.icon}</div>
-            <h3 class="font-bold text-zinc-100 group-hover:text-amber-400 transition-colors mb-1.5">
-              {cat.name}
-            </h3>
-            <p class="text-zinc-500 text-sm leading-relaxed">{cat.description}</p>
+            <div class="text-2xl mb-3">{cat.icon}</div>
+            <p class="font-bold text-sm mb-1 group-hover:text-amber-400 transition-colors" style="color: #ddd;">{cat.name}</p>
+            <p class="text-xs leading-relaxed" style="color: var(--text-dim);">{cat.blurb}</p>
           </a>
         ))}
       </div>
     </div>
   </section>
 
-  <!-- Latest Posts -->
-  <section class="py-16 border-t border-[#2a2a2a]">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between mb-8">
-        <h2 class="text-2xl font-bold text-zinc-100">Latest Reviews</h2>
-        <a href="/blog" class="text-amber-500 hover:text-amber-400 text-sm font-medium transition-colors">
+  <!-- ─── Recent Posts ─────────────────────────────────────────── -->
+  <section class="py-16" style="border-bottom: 1px solid #1a1a1a;">
+    <div class="container">
+      <div class="flex items-center justify-between mb-8 reveal">
+        <h2 class="font-black text-xl tracking-tight" style="color: #e0e0e0;">Latest</h2>
+        <a href="/blog" class="text-sm font-semibold transition-colors" style="color: var(--text-dim);" onmouseover="this.style.color='#f59e0b'" onmouseout="this.style.color='var(--text-dim)'">
           View all →
         </a>
       </div>
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {recent.map((post) => (
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+        {recent.map((post, i) => (
           <PostCard
             title={post.data.title}
             description={post.data.description}
@@ -150,28 +160,27 @@ const categories = [
             heroImageAlt={post.data.heroImageAlt}
             category={post.data.category}
             pubDate={post.data.pubDate}
+            placeholder={post.data.placeholder}
+            index={i}
           />
         ))}
       </div>
     </div>
   </section>
 
-  <!-- CTA Banner -->
-  <section class="py-16 border-t border-[#2a2a2a]">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="bg-gradient-to-r from-amber-500/10 to-orange-500/5 border border-amber-500/20 rounded-2xl p-8 md:p-12 text-center">
-        <h2 class="text-2xl md:text-3xl font-bold text-zinc-50 mb-3">
-          New reviews every week.
-        </h2>
-        <p class="text-zinc-400 mb-6 max-w-md mx-auto">
-          Bookmark us and check back often — we're always testing and reviewing the latest products.
-        </p>
-        <a href="/blog" class="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-400 text-black font-bold px-6 py-3 rounded-lg transition-colors">
-          See All Reviews
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7" />
-          </svg>
-        </a>
+  <!-- ─── CTA ──────────────────────────────────────────────────── -->
+  <section class="py-20">
+    <div class="container">
+      <div class="reveal rounded-2xl p-10 md:p-14 text-center relative overflow-hidden" style="background: var(--surface); border: 1px solid var(--border);">
+        <div class="glow-orb" style="width: 400px; height: 400px; background: radial-gradient(circle, rgba(245,158,11,0.07) 0%, transparent 70%); top: 50%; left: 50%; transform: translate(-50%, -50%);"></div>
+        <div class="relative">
+          <p class="text-xs font-black uppercase tracking-widest mb-4" style="color: var(--accent);">No newsletter. No spam. Just good takes.</p>
+          <h2 class="font-black text-2xl md:text-3xl mb-4 tracking-tight" style="color: #efefef;">New reviews every week.</h2>
+          <p class="mb-8 max-w-sm mx-auto text-sm leading-relaxed" style="color: var(--text-muted);">
+            Bookmark the site and check back. Or don't — the posts will still be here.
+          </p>
+          <a href="/blog" class="btn-primary text-base px-8 py-3">See All Reviews</a>
+        </div>
       </div>
     </div>
   </section>
