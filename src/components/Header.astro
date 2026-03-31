@@ -9,30 +9,32 @@ const nav = [
 const path = Astro.url.pathname;
 ---
 
-<header class="sticky top-0 z-50" style="background: rgba(8,8,8,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid #1a1a1a;">
+<header id="site-header" style="position:sticky;top:0;z-index:50;background:rgba(11,10,9,0.82);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid transparent;transition:border-color .3s;">
   <div class="container flex items-center justify-between h-14">
 
     <!-- Logo -->
-    <a href="/" class="flex items-center gap-2.5 group select-none">
-      <div class="relative w-7 h-7 flex-shrink-0">
-        <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
-          <circle cx="14" cy="14" r="13" stroke="#f59e0b" stroke-width="1.5" opacity="0.3"/>
-          <circle cx="14" cy="14" r="9"  stroke="#f59e0b" stroke-width="1.5" opacity="0.6"/>
-          <circle cx="14" cy="14" r="5"  fill="#f59e0b"/>
-          <!-- spokes -->
-          <line x1="14" y1="1"  x2="14" y2="5"  stroke="#f59e0b" stroke-width="1.5" opacity="0.4"/>
-          <line x1="14" y1="23" x2="14" y2="27" stroke="#f59e0b" stroke-width="1.5" opacity="0.4"/>
-          <line x1="1"  y1="14" x2="5"  y2="14" stroke="#f59e0b" stroke-width="1.5" opacity="0.4"/>
-          <line x1="23" y1="14" x2="27" y2="14" stroke="#f59e0b" stroke-width="1.5" opacity="0.4"/>
-          <line x1="4.5"  y1="4.5"  x2="7.5"  y2="7.5"  stroke="#f59e0b" stroke-width="1.5" opacity="0.3"/>
-          <line x1="20.5" y1="20.5" x2="23.5" y2="23.5" stroke="#f59e0b" stroke-width="1.5" opacity="0.3"/>
-          <line x1="23.5" y1="4.5"  x2="20.5" y2="7.5"  stroke="#f59e0b" stroke-width="1.5" opacity="0.3"/>
-          <line x1="4.5"  y1="23.5" x2="7.5"  y2="20.5" stroke="#f59e0b" stroke-width="1.5" opacity="0.3"/>
+    <a href="/" class="flex items-center gap-2.5 select-none group" aria-label="Tumbleweed0220 home">
+      <!-- Tumbleweed SVG logo -->
+      <div class="relative w-8 h-8 flex-shrink-0">
+        <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full" style="animation: spin-slow 18s linear infinite;">
+          <ellipse cx="18" cy="18" rx="16" ry="7"  stroke="#e8a020" stroke-width="1.4" opacity=".9"/>
+          <ellipse cx="18" cy="18" rx="16" ry="7"  stroke="#e8a020" stroke-width="1.4" opacity=".5" transform="rotate(45 18 18)"/>
+          <ellipse cx="18" cy="18" rx="16" ry="7"  stroke="#e8a020" stroke-width="1.4" opacity=".5" transform="rotate(90 18 18)"/>
+          <ellipse cx="18" cy="18" rx="16" ry="7"  stroke="#e8a020" stroke-width="1.4" opacity=".5" transform="rotate(135 18 18)"/>
+          <circle  cx="18" cy="18" r="3.5" fill="#e8a020"/>
+          <!-- small dots at extremities -->
+          <circle cx="18" cy="2"  r="1.2" fill="#e8a020" opacity=".5"/>
+          <circle cx="18" cy="34" r="1.2" fill="#e8a020" opacity=".5"/>
+          <circle cx="2"  cy="18" r="1.2" fill="#e8a020" opacity=".5"/>
+          <circle cx="34" cy="18" r="1.2" fill="#e8a020" opacity=".5"/>
         </svg>
       </div>
-      <span class="font-black text-base tracking-tight text-zinc-100 group-hover:text-white transition-colors">
-        TUMBLEWEED<span class="text-amber-500">0220</span>
-      </span>
+      <div class="flex flex-col leading-none">
+        <span class="font-black text-sm tracking-tight" style="color:#f0ebe3;letter-spacing:-.03em;">
+          TUMBLEWEED
+        </span>
+        <span class="font-black text-xs" style="color:var(--accent);letter-spacing:.05em;">0220</span>
+      </div>
     </a>
 
     <!-- Desktop nav -->
@@ -40,63 +42,80 @@ const path = Astro.url.pathname;
       {nav.map((link) => (
         <a
           href={link.href}
-          class={`px-3 py-1.5 text-sm font-medium rounded-md transition-all duration-200 ${
+          class={`relative px-3.5 py-1.5 text-[.8rem] font-semibold rounded-md transition-all duration-200 nav-link ${
             path.startsWith(link.href)
-              ? 'text-amber-400 bg-amber-500/10'
-              : 'text-zinc-500 hover:text-zinc-200 hover:bg-white/5'
+              ? 'active'
+              : ''
           }`}
+          style={path.startsWith(link.href)
+            ? 'color:var(--accent);background:var(--accent-dim);'
+            : 'color:var(--muted);'}
         >
           {link.label}
         </a>
       ))}
+      <a href="/blog" class="btn btn-primary ml-3 text-xs px-4 py-1.5">
+        All Reviews →
+      </a>
     </nav>
 
     <!-- Mobile toggle -->
-    <button
-      id="nav-btn"
-      class="md:hidden p-2 rounded-md text-zinc-500 hover:text-zinc-200 hover:bg-white/5 transition-colors"
-      aria-label="Menu"
-      aria-expanded="false"
-    >
-      <svg id="icon-open"  width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+    <button id="nav-btn" class="md:hidden p-2 rounded-lg transition-colors" style="color:var(--muted);" aria-label="Menu" aria-expanded="false">
+      <svg id="icon-open"  width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
         <path stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16"/>
       </svg>
-      <svg id="icon-close" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" class="hidden">
+      <svg id="icon-close" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="display:none;">
         <path stroke-linecap="round" d="M6 18L18 6M6 6l12 12"/>
       </svg>
     </button>
   </div>
 
   <!-- Mobile menu -->
-  <div id="nav-mobile" class="hidden md:hidden" style="border-top: 1px solid #1a1a1a;">
-    <nav class="container py-3 flex flex-col gap-0.5">
+  <div id="nav-mobile" style="display:none; border-top:1px solid var(--border);">
+    <nav class="container py-3 flex flex-col gap-1">
       {nav.map((link) => (
-        <a
-          href={link.href}
-          class={`px-3 py-2 text-sm font-medium rounded-md transition-all ${
-            path.startsWith(link.href)
-              ? 'text-amber-400 bg-amber-500/10'
-              : 'text-zinc-500 hover:text-zinc-200 hover:bg-white/5'
-          }`}
+        <a href={link.href} class="px-3 py-2.5 rounded-lg text-sm font-semibold transition-all"
+          style={path.startsWith(link.href)
+            ? 'color:var(--accent);background:var(--accent-dim);'
+            : 'color:var(--muted);'}
         >
           {link.label}
         </a>
       ))}
+      <a href="/blog" class="btn btn-primary mt-2 text-sm justify-center">All Reviews →</a>
     </nav>
   </div>
 </header>
 
+<style>
+  .nav-link:not(.active):hover {
+    color: var(--text) !important;
+    background: rgba(255,255,255,.04);
+  }
+</style>
+
 <script>
+  // Mobile menu
   const btn   = document.getElementById('nav-btn');
   const menu  = document.getElementById('nav-mobile');
   const open  = document.getElementById('icon-open');
   const close = document.getElementById('icon-close');
 
   btn?.addEventListener('click', () => {
-    const isOpen = !menu?.classList.contains('hidden');
-    menu?.classList.toggle('hidden', isOpen);
-    open?.classList.toggle('hidden', !isOpen);
-    close?.classList.toggle('hidden', isOpen);
-    btn.setAttribute('aria-expanded', String(!isOpen));
+    const isOpen = menu?.style.display !== 'none';
+    if (menu)  menu.style.display  = isOpen ? 'none'  : 'block';
+    if (open)  open.style.display  = isOpen ? 'block' : 'none';
+    if (close) close.style.display = isOpen ? 'none'  : 'block';
+    btn?.setAttribute('aria-expanded', String(!isOpen));
   });
+
+  // Header border on scroll
+  const header = document.getElementById('site-header');
+  window.addEventListener('scroll', () => {
+    if (header) {
+      header.style.borderBottomColor = window.scrollY > 20
+        ? 'var(--border)'
+        : 'transparent';
+    }
+  }, { passive: true });
 </script>

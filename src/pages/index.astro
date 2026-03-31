@@ -1,18 +1,19 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PostCard from '../components/PostCard.astro';
+import Marquee from '../components/Marquee.astro';
 import { getCollection } from 'astro:content';
 
 const all      = await getCollection('blog');
 const sorted   = all.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
-const featured = sorted.filter((p) => p.data.featured).slice(0, 3);
+const featured = sorted.filter(p => p.data.featured).slice(0, 3);
 const recent   = sorted.slice(0, 6);
 
 const cats = [
-  { name: 'Tech',      icon: '💻', blurb: 'Gadgets, audio, and everything digital' },
-  { name: 'Trending',  icon: '🔥', blurb: "What's worth the hype right now" },
-  { name: 'Gear',      icon: '🎒', blurb: 'Tools, accessories, and everyday carry' },
-  { name: 'Lifestyle', icon: '✦',  blurb: 'Home, health, and quality-of-life picks' },
+  { name:'Tech',      icon:'💻', blurb:'Gadgets, audio gear, software'   },
+  { name:'Trending',  icon:'🔥', blurb:"What's worth the hype right now" },
+  { name:'Gear',      icon:'🎒', blurb:'Tools, EDC, accessories'          },
+  { name:'Lifestyle', icon:'✦',  blurb:'Home, health, quality of life'    },
 ];
 ---
 
@@ -21,136 +22,147 @@ const cats = [
   description="Tumbleweed0220 — solo affiliate blog. Honest product takes across tech, gear, and lifestyle."
 >
 
-  <!-- ─── Hero ─────────────────────────────────────────────────── -->
-  <section class="relative overflow-hidden" style="border-bottom: 1px solid #1a1a1a;">
-    <!-- Glow -->
-    <div class="glow-orb" style="width: 600px; height: 600px; background: radial-gradient(circle, rgba(245,158,11,0.09) 0%, transparent 70%); top: -200px; left: -100px;"></div>
-    <div class="glow-orb" style="width: 300px; height: 300px; background: radial-gradient(circle, rgba(245,158,11,0.06) 0%, transparent 70%); top: 100px; right: 0; animation-delay: 2s;"></div>
+  <!-- ── Hero ───────────────────────────────────────────────── -->
+  <section style="position:relative;overflow:hidden;border-bottom:1px solid var(--border);padding:6rem 0 5rem;">
+    <!-- Orbs -->
+    <div class="orb" style="width:700px;height:700px;background:radial-gradient(circle,rgba(232,160,32,.07) 0%,transparent 65%);top:-250px;left:-150px;"></div>
+    <div class="orb" style="width:400px;height:400px;background:radial-gradient(circle,rgba(232,160,32,.05) 0%,transparent 65%);bottom:-100px;right:-50px;animation-delay:2.5s;"></div>
 
-    <div class="container relative py-24 md:py-36">
-      <div class="reveal max-w-3xl">
-        <!-- Eyebrow -->
-        <div class="inline-flex items-center gap-2 mb-6 text-xs font-bold uppercase tracking-widest" style="color: var(--accent);">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse inline-block"></span>
+    <div class="container" style="position:relative;">
+      <div class="reveal" style="max-width:780px;">
+
+        <div style="display:inline-flex;align-items:center;gap:.5rem;margin-bottom:1.5rem;font-size:.65rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);">
+          <span style="width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse-glow 2s ease-in-out infinite;display:inline-block;"></span>
           Solo Affiliate Blog
         </div>
 
-        <!-- Headline -->
-        <h1 class="font-black leading-[1.05] mb-6 tracking-tight" style="font-size: clamp(2.4rem, 6vw, 4.5rem); color: #f0f0f0;">
-          Find what's actually<br />
-          <span style="color: var(--accent);">worth buying.</span>
+        <h1 style="font-size:clamp(2.6rem,7vw,5.5rem);font-weight:900;line-height:1.04;letter-spacing:-.04em;color:#f0ebe3;margin-bottom:1.5rem;">
+          Find what's actually<br/>
+          <span style="color:var(--accent);">worth&nbsp;buying.</span>
         </h1>
 
-        <p class="text-lg leading-relaxed mb-8 max-w-xl" style="color: var(--text-muted);">
-          No editorial team. No brand deals. One person's honest take on tech, gear, and the stuff that earns a place in your life.
+        <p style="font-size:1.15rem;line-height:1.75;color:var(--muted);max-width:520px;margin-bottom:2rem;">
+          No editorial team. No brand deals. One person's honest take on tech, gear, and the stuff that earns a place in real life.
         </p>
 
-        <div class="flex flex-wrap gap-3">
-          <a href="/blog" class="btn-primary text-base px-6 py-3">
+        <div style="display:flex;flex-wrap:wrap;gap:.75rem;">
+          <a href="/blog"  class="btn btn-primary" style="font-size:.95rem;padding:.75rem 1.75rem;">
             Browse Reviews
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" d="M5 12h14M12 5l7 7-7 7"/>
             </svg>
           </a>
-          <a href="/about" class="btn-ghost text-base px-6 py-3">About this site</a>
+          <a href="/about" class="btn btn-ghost" style="font-size:.95rem;padding:.75rem 1.75rem;">About the site</a>
         </div>
+      </div>
+
+      <!-- Floating stats -->
+      <div class="reveal reveal-delay-3" style="display:flex;gap:2.5rem;margin-top:3.5rem;padding-top:2rem;border-top:1px solid var(--border);">
+        {[
+          { n: '3',   label: 'Reviews live' },
+          { n: '100%', label: 'Disclosed affiliate links' },
+          { n: '1',   label: 'Person writing this' },
+        ].map(s => (
+          <div>
+            <div style="font-size:1.6rem;font-weight:900;color:var(--accent);letter-spacing:-.04em;">{s.n}</div>
+            <div style="font-size:.7rem;font-weight:600;color:var(--dim);text-transform:uppercase;letter-spacing:.08em;margin-top:.2rem;">{s.label}</div>
+          </div>
+        ))}
       </div>
     </div>
   </section>
 
-  <!-- ─── Featured (asymmetric grid) ──────────────────────────── -->
+  <!-- ── Marquee ─────────────────────────────────────────────── -->
+  <Marquee/>
+
+  <!-- ── Featured (asymmetric) ──────────────────────────────── -->
   {featured.length > 0 && (
-    <section class="py-16" style="border-bottom: 1px solid #1a1a1a;">
+    <section style="padding:5rem 0;border-bottom:1px solid var(--border);">
       <div class="container">
-        <div class="flex items-center justify-between mb-8 reveal">
-          <h2 class="font-black text-xl tracking-tight" style="color: #e0e0e0;">Featured</h2>
-          <a href="/blog" class="text-sm font-semibold transition-colors" style="color: var(--text-dim);" onmouseover="this.style.color='#f59e0b'" onmouseout="this.style.color='var(--text-dim)'">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem;" class="reveal">
+          <div class="section-label">Featured</div>
+          <a href="/blog" style="font-size:.75rem;font-weight:700;color:var(--dim);text-decoration:none;transition:color .2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--dim)'">
             All posts →
           </a>
         </div>
 
-        <!-- Big + 2 stacked layout -->
-        <div class="grid grid-cols-1 lg:grid-cols-5 gap-5">
-          {/* First post: large */}
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;" class="featured-grid">
+          <!-- Big post -->
           {featured[0] && (
-            <article class="lg:col-span-3 post-card reveal group" style="min-height: 380px;">
+            <article class="post-card magnetic reveal" data-magnetic style="grid-row:span 2;">
               {featured[0].data.heroImage && (
-                <a href={`/blog/${featured[0].slug}`} class="post-card-img-wrap block relative" style="aspect-ratio: 16/9;">
-                  <img src={featured[0].data.heroImage} alt={featured[0].data.heroImageAlt || featured[0].data.title} width="800" height="450" loading="eager" class="w-full h-full object-cover"/>
+                <a href={`/blog/${featured[0].slug}`} class="post-card-img block" style="aspect-ratio:16/9;display:block;">
+                  <img src={featured[0].data.heroImage} alt={featured[0].data.heroImageAlt||featured[0].data.title} width="800" height="450" loading="eager" style={featured[0].data.placeholder ? 'filter:saturate(.4) brightness(.7);' : ''}/>
                   {featured[0].data.placeholder && (
-                    <div class="absolute top-3 right-3"><span class="tag-placeholder">DEMO</span></div>
+                    <div class="placeholder-ribbon">⚠ placeholder · demo content · not a real review ⚠</div>
                   )}
                 </a>
               )}
-              <div class="p-6 flex flex-col flex-1">
-                <div class="flex items-center gap-2 mb-3">
+              <div style="padding:1.5rem;display:flex;flex-direction:column;flex:1;">
+                <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.875rem;">
                   <a href={`/category/${featured[0].data.category}`} class="tag">{featured[0].data.category}</a>
-                  <time class="text-xs ml-auto" style="color: var(--text-dim);">
-                    {featured[0].data.pubDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
-                  </time>
+                  <time style="font-size:.7rem;color:var(--dim);margin-left:auto;">{featured[0].data.pubDate.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}</time>
                 </div>
-                <h3 class="font-black text-xl leading-snug mb-2 group-hover:text-amber-400 transition-colors" style="color: #e8e8e8;">
-                  <a href={`/blog/${featured[0].slug}`}>{featured[0].data.title}</a>
+                <h3 style="font-size:1.35rem;font-weight:900;line-height:1.2;letter-spacing:-.025em;color:#e8e2da;margin-bottom:.75rem;" class="hover-amber-parent">
+                  <a href={`/blog/${featured[0].slug}`} style="transition:color .2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='#e8e2da'">{featured[0].data.title}</a>
                 </h3>
-                <p class="text-sm leading-relaxed mb-4 flex-1" style="color: var(--text-muted);">{featured[0].data.description}</p>
-                <a href={`/blog/${featured[0].slug}`} class="text-sm font-bold transition-colors w-fit" style="color: var(--accent);">Read →</a>
+                <p style="font-size:.875rem;line-height:1.7;color:var(--muted);flex:1;">{featured[0].data.description}</p>
+                <a href={`/blog/${featured[0].slug}`} style="margin-top:1.25rem;font-size:.78rem;font-weight:800;color:var(--accent);text-decoration:none;">Read more →</a>
               </div>
             </article>
           )}
 
-          {/* Posts 2 + 3: stacked */}
-          <div class="lg:col-span-2 flex flex-col gap-5">
-            {featured.slice(1, 3).map((post, i) => (
-              <PostCard
-                title={post.data.title}
-                description={post.data.description}
-                slug={post.slug}
-                heroImage={post.data.heroImage}
-                heroImageAlt={post.data.heroImageAlt}
-                category={post.data.category}
-                pubDate={post.data.pubDate}
-                placeholder={post.data.placeholder}
-                index={i + 1}
-              />
-            ))}
-          </div>
+          <!-- Two stacked -->
+          {featured.slice(1,3).map((post, i) => (
+            <PostCard
+              title={post.data.title}
+              description={post.data.description}
+              slug={post.slug}
+              heroImage={post.data.heroImage}
+              heroImageAlt={post.data.heroImageAlt}
+              category={post.data.category}
+              pubDate={post.data.pubDate}
+              placeholder={post.data.placeholder}
+              index={i+1}
+            />
+          ))}
         </div>
       </div>
     </section>
   )}
 
-  <!-- ─── Categories ───────────────────────────────────────────── -->
-  <section class="py-16" style="border-bottom: 1px solid #1a1a1a;">
+  <!-- ── Categories ─────────────────────────────────────────── -->
+  <section style="padding:5rem 0;border-bottom:1px solid var(--border);">
     <div class="container">
-      <h2 class="font-black text-xl tracking-tight mb-8 reveal" style="color: #e0e0e0;">Categories</h2>
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-        {cats.map((cat, i) => (
+      <div class="section-label reveal" style="margin-bottom:2rem;">Categories</div>
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;" class="cats-grid">
+        {cats.map((c, i) => (
           <a
-            href={`/category/${cat.name}`}
-            class={`reveal reveal-delay-${i + 1} group rounded-xl p-5 transition-all duration-300`}
-            style="background: var(--surface); border: 1px solid var(--border);"
-            onmouseover="this.style.borderColor='rgba(245,158,11,0.3)'; this.style.background='#161616';"
-            onmouseout="this.style.borderColor='var(--border)'; this.style.background='var(--surface)';"
+            href={`/category/${c.name}`}
+            class={`reveal reveal-delay-${i+1}`}
+            style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;text-decoration:none;transition:border-color .3s,background .3s,transform .3s cubic-bezier(.16,1,.3,1);"
+            onmouseover="this.style.borderColor='rgba(232,160,32,.35)';this.style.background='var(--surface2)';this.style.transform='translateY(-4px)';"
+            onmouseout="this.style.borderColor='var(--border)';this.style.background='var(--surface)';this.style.transform='';"
           >
-            <div class="text-2xl mb-3">{cat.icon}</div>
-            <p class="font-bold text-sm mb-1 group-hover:text-amber-400 transition-colors" style="color: #ddd;">{cat.name}</p>
-            <p class="text-xs leading-relaxed" style="color: var(--text-dim);">{cat.blurb}</p>
+            <div style="font-size:1.75rem;margin-bottom:.75rem;">{c.icon}</div>
+            <div style="font-size:.9rem;font-weight:800;color:#e0d8cf;margin-bottom:.3rem;transition:color .2s;" class="cat-name">{c.name}</div>
+            <div style="font-size:.75rem;color:var(--dim);">{c.blurb}</div>
           </a>
         ))}
       </div>
     </div>
   </section>
 
-  <!-- ─── Recent Posts ─────────────────────────────────────────── -->
-  <section class="py-16" style="border-bottom: 1px solid #1a1a1a;">
+  <!-- ── Latest posts ────────────────────────────────────────── -->
+  <section style="padding:5rem 0;border-bottom:1px solid var(--border);">
     <div class="container">
-      <div class="flex items-center justify-between mb-8 reveal">
-        <h2 class="font-black text-xl tracking-tight" style="color: #e0e0e0;">Latest</h2>
-        <a href="/blog" class="text-sm font-semibold transition-colors" style="color: var(--text-dim);" onmouseover="this.style.color='#f59e0b'" onmouseout="this.style.color='var(--text-dim)'">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem;" class="reveal">
+        <div class="section-label">Latest</div>
+        <a href="/blog" style="font-size:.75rem;font-weight:700;color:var(--dim);text-decoration:none;transition:color .2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--dim)'">
           View all →
         </a>
       </div>
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.25rem;">
         {recent.map((post, i) => (
           <PostCard
             title={post.data.title}
@@ -168,21 +180,36 @@ const cats = [
     </div>
   </section>
 
-  <!-- ─── CTA ──────────────────────────────────────────────────── -->
-  <section class="py-20">
+  <!-- ── CTA ────────────────────────────────────────────────── -->
+  <section style="padding:5rem 0;">
     <div class="container">
-      <div class="reveal rounded-2xl p-10 md:p-14 text-center relative overflow-hidden" style="background: var(--surface); border: 1px solid var(--border);">
-        <div class="glow-orb" style="width: 400px; height: 400px; background: radial-gradient(circle, rgba(245,158,11,0.07) 0%, transparent 70%); top: 50%; left: 50%; transform: translate(-50%, -50%);"></div>
-        <div class="relative">
-          <p class="text-xs font-black uppercase tracking-widest mb-4" style="color: var(--accent);">No newsletter. No spam. Just good takes.</p>
-          <h2 class="font-black text-2xl md:text-3xl mb-4 tracking-tight" style="color: #efefef;">New reviews every week.</h2>
-          <p class="mb-8 max-w-sm mx-auto text-sm leading-relaxed" style="color: var(--text-muted);">
-            Bookmark the site and check back. Or don't — the posts will still be here.
+      <div class="reveal" style="background:var(--surface);border:1px solid var(--border);border-radius:1.25rem;padding:4rem 3rem;text-align:center;position:relative;overflow:hidden;">
+        <div class="orb" style="width:500px;height:300px;background:radial-gradient(ellipse,rgba(232,160,32,.06) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;"></div>
+        <div style="position:relative;">
+          <div class="section-label" style="justify-content:center;margin-bottom:1.25rem;">No newsletter. No spam.</div>
+          <h2 style="font-size:clamp(1.5rem,4vw,2.5rem);font-weight:900;letter-spacing:-.03em;color:#f0ebe3;margin-bottom:1rem;">New reviews as I write them.</h2>
+          <p style="color:var(--muted);font-size:.9rem;max-width:380px;margin:0 auto 2rem;line-height:1.7;">
+            Bookmark it and check back. Or just search when you're about to buy something and want a second opinion.
           </p>
-          <a href="/blog" class="btn-primary text-base px-8 py-3">See All Reviews</a>
+          <a href="/blog" class="btn btn-primary" style="font-size:.95rem;padding:.8rem 2.25rem;">
+            See All Reviews
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </a>
         </div>
       </div>
     </div>
   </section>
 
 </BaseLayout>
+
+<style>
+  @media (max-width: 640px) {
+    .featured-grid { grid-template-columns: 1fr !important; }
+    .cats-grid     { grid-template-columns: 1fr 1fr; }
+  }
+  @media (min-width: 768px) {
+    .cats-grid { grid-template-columns: repeat(4, 1fr) !important; }
+  }
+</style>

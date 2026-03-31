@@ -11,16 +11,10 @@ interface Props {
   pubDate?: string;
 }
 
-const {
-  title,
-  description,
-  image = '/og-default.jpg',
-  type = 'website',
-  pubDate,
-} = Astro.props;
+const { title, description, image = '/og-default.jpg', type = 'website', pubDate } = Astro.props;
 
-const siteUrl  = 'https://yoursite.com';
-const siteName = 'Tumbleweed0220';
+const siteUrl   = 'https://yoursite.com';
+const siteName  = 'Tumbleweed0220';
 const canonical = new URL(Astro.url.pathname, siteUrl).toString();
 const ogImage   = image.startsWith('http') ? image : new URL(image, siteUrl).toString();
 const pageTitle = title === 'Home' ? siteName : `${title} — ${siteName}`;
@@ -29,48 +23,65 @@ const pageTitle = title === 'Home' ? siteName : `${title} — ${siteName}`;
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="canonical" href={canonical} />
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
+    <link rel="canonical" href={canonical}/>
 
     <title>{pageTitle}</title>
-    <meta name="description" content={description} />
+    <meta name="description" content={description}/>
 
-    <meta property="og:type"        content={type} />
-    <meta property="og:url"         content={canonical} />
-    <meta property="og:title"       content={pageTitle} />
-    <meta property="og:description" content={description} />
-    <meta property="og:image"       content={ogImage} />
-    <meta property="og:site_name"   content={siteName} />
-    {pubDate && <meta property="article:published_time" content={pubDate} />}
+    <meta property="og:type"        content={type}/>
+    <meta property="og:url"         content={canonical}/>
+    <meta property="og:title"       content={pageTitle}/>
+    <meta property="og:description" content={description}/>
+    <meta property="og:image"       content={ogImage}/>
+    <meta property="og:site_name"   content={siteName}/>
+    {pubDate && <meta property="article:published_time" content={pubDate}/>}
 
-    <meta name="twitter:card"        content="summary_large_image" />
-    <meta name="twitter:title"       content={pageTitle} />
-    <meta name="twitter:description" content={description} />
-    <meta name="twitter:image"       content={ogImage} />
+    <meta name="twitter:card"        content="summary_large_image"/>
+    <meta name="twitter:title"       content={pageTitle}/>
+    <meta name="twitter:description" content={description}/>
+    <meta name="twitter:image"       content={ogImage}/>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
   </head>
 
-  <body class="min-h-screen flex flex-col">
-    <Header />
-    <main class="flex-1 page-enter">
-      <slot />
+  <body style="animation: fadeIn .35s ease both;">
+    <Header/>
+    <main class="flex-1" style="min-height:100vh;">
+      <slot/>
     </main>
-    <Footer />
+    <Footer/>
 
-    <!-- Scroll reveal observer -->
     <script>
-      const observer = new IntersectionObserver(
-        (entries) => entries.forEach((e) => {
-          if (e.isIntersecting) e.target.classList.add('is-visible');
-        }),
-        { threshold: 0.07, rootMargin: '0px 0px -32px 0px' }
+      // ── Scroll reveal
+      const revealObs = new IntersectionObserver(
+        (entries) => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('is-visible'); }),
+        { threshold: 0.07, rootMargin: '0px 0px -28px 0px' }
       );
-      document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+      document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+      // ── Magnetic card tilt
+      document.querySelectorAll('[data-magnetic]').forEach(card => {
+        const el = card as HTMLElement;
+        el.addEventListener('mousemove', (e: MouseEvent) => {
+          const r = el.getBoundingClientRect();
+          const x = ((e.clientX - r.left) / r.width  - .5) * 10;
+          const y = ((e.clientY - r.top)  / r.height - .5) * 7;
+          el.style.transform = `translateY(-7px) perspective(700px) rotateX(${-y}deg) rotateY(${x}deg)`;
+        });
+        el.addEventListener('mouseleave', () => {
+          el.style.transition = 'transform .5s cubic-bezier(.16,1,.3,1), box-shadow .38s ease, border-color .3s ease';
+          el.style.transform  = '';
+          setTimeout(() => { el.style.transition = ''; }, 500);
+        });
+        el.addEventListener('mouseenter', () => {
+          el.style.transition = 'none';
+        });
+      });
     </script>
   </body>
 </html>

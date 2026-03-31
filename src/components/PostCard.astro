@@ -12,26 +12,28 @@ interface Props {
 }
 
 const { title, description, slug, heroImage, heroImageAlt, category, pubDate, placeholder = false, index = 0 } = Astro.props;
-
-const date  = pubDate.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
-const delay = index > 0 ? `${Math.min(index * 0.08, 0.4)}s` : '0s';
+const date  = pubDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+const delay = `${Math.min(index * 0.08, 0.4)}s`;
 ---
 
-<article class={`post-card reveal reveal-delay-${Math.min(index + 1, 5)}`} style={`transition-delay: ${delay};`}>
+<article
+  class="post-card reveal magnetic"
+  style={`transition-delay:${delay};`}
+  data-magnetic
+>
   <!-- Image -->
-  <a href={`/blog/${slug}`} class="post-card-img-wrap block relative">
+  <a href={`/blog/${slug}`} class="post-card-img block" tabindex="-1" aria-hidden="true">
     {heroImage ? (
       <img
         src={heroImage}
         alt={heroImageAlt || title}
-        width="640"
-        height="360"
+        width="640" height="360"
         loading="lazy"
         decoding="async"
       />
     ) : (
-      <div class="w-full h-full flex items-center justify-center" style="background: linear-gradient(135deg, #131313 0%, #0e0e0e 100%); min-height: 180px;">
-        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#2a2a2a" stroke-width="1.5">
+      <div class="w-full h-full flex items-center justify-center" style="min-height:180px;background:var(--surface2);">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--border2)" stroke-width="1.5">
           <rect x="3" y="3" width="18" height="18" rx="2"/>
           <circle cx="8.5" cy="8.5" r="1.5"/>
           <path d="M21 15l-5-5L5 21"/>
@@ -40,48 +42,28 @@ const delay = index > 0 ? `${Math.min(index * 0.08, 0.4)}s` : '0s';
     )}
 
     {placeholder && (
-      <div class="absolute top-3 right-3">
-        <span class="tag-placeholder">DEMO</span>
-      </div>
+      <div class="placeholder-ribbon">⚠ placeholder · demo content · not a real review ⚠</div>
     )}
   </a>
 
-  <!-- Content -->
+  <!-- Body -->
   <div class="p-5 flex flex-col flex-1">
     <div class="flex items-center gap-2 mb-3">
       <a href={`/category/${category}`} class="tag">{category}</a>
-      <time datetime={pubDate.toISOString()} class="text-xs ml-auto" style="color: var(--text-dim);">
-        {date}
-      </time>
+      <time datetime={pubDate.toISOString()} class="text-xs ml-auto" style="color:var(--dim);">{date}</time>
     </div>
 
-    <h3 class="font-bold text-base leading-snug mb-2 line-clamp-2 transition-colors duration-200" style="color: #e8e8e8;">
-      <a href={`/blog/${slug}`} class="hover:text-amber-400 transition-colors">{title}</a>
+    <h3 class="font-bold text-base leading-snug mb-2 line-clamp-2" style="color:#e8e2da;">
+      <a href={`/blog/${slug}`} class="hover-amber-link">{title}</a>
     </h3>
 
-    <p class="text-sm leading-relaxed line-clamp-3 flex-1" style="color: var(--text-muted);">{description}</p>
+    <p class="text-sm leading-relaxed line-clamp-3 flex-1" style="color:var(--muted);">{description}</p>
 
-    <a
-      href={`/blog/${slug}`}
-      class="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold transition-colors w-fit"
-      style="color: var(--accent);"
-    >
-      Read →
-    </a>
+    <span class="mt-4 text-xs font-bold" style="color:var(--accent);">Read more →</span>
   </div>
 </article>
 
 <style>
-  .line-clamp-2 {
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-  .line-clamp-3 {
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
+  .hover-amber-link { transition: color .2s ease; }
+  .hover-amber-link:hover { color: var(--accent); }
 </style>

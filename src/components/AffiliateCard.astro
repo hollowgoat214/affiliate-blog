@@ -10,43 +10,50 @@ interface Props {
 const { name, description, image, url, price, badge } = Astro.props;
 ---
 
-<div class="affiliate-card not-prose flex flex-col sm:flex-row">
-  <!-- Image -->
-  <div class="sm:w-44 flex-shrink-0 flex items-center justify-center p-5" style="background: #0e0e0e; border-right: 1px solid rgba(245,158,11,0.1);">
-    <img
-      src={image}
-      alt={name}
-      width="160"
-      height="160"
-      class="w-32 h-32 object-contain"
-      loading="lazy"
-      decoding="async"
-    />
-  </div>
+<div class="aff-card not-prose" style="display:flex;flex-direction:column;">
+  <div style="display:flex;flex-direction:column;" class="aff-inner">
+    <!-- image -->
+    <div style="flex-shrink:0;width:100%;max-height:160px;background:#0e0d0b;display:flex;align-items:center;justify-content:center;padding:1.5rem;border-bottom:1px solid rgba(232,160,32,.08);">
+      <img src={image} alt={name} width="140" height="140" style="width:auto;height:120px;max-width:140px;object-fit:contain;" loading="lazy" decoding="async"/>
+    </div>
 
-  <!-- Details -->
-  <div class="p-5 flex flex-col justify-between flex-1 min-w-0">
-    <div>
+    <!-- details -->
+    <div style="padding:1.25rem;display:flex;flex-direction:column;flex:1;">
       {badge && (
-        <span class="inline-block text-xs font-black px-2.5 py-0.5 rounded mb-2.5 uppercase tracking-widest" style="background: var(--accent); color: #000;">
+        <span style="display:inline-block;font-size:.6rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase;padding:.2rem .65rem;border-radius:4px;background:var(--accent);color:#000;margin-bottom:.75rem;width:fit-content;">
           {badge}
         </span>
       )}
-      <h4 class="font-bold text-lg mb-0.5" style="color: var(--text);">{name}</h4>
-      {price && <p class="font-semibold mb-2 text-sm" style="color: var(--accent);">{price}</p>}
-      <p class="text-sm leading-relaxed" style="color: var(--text-muted);">{description}</p>
-    </div>
+      <h4 style="font-size:1rem;font-weight:800;color:#e8e2da;margin-bottom:.25rem;letter-spacing:-.01em;">{name}</h4>
+      {price && <p style="font-size:.85rem;font-weight:700;color:var(--accent);margin-bottom:.5rem;">{price}</p>}
+      <p style="font-size:.83rem;line-height:1.65;color:var(--muted);flex:1;">{description}</p>
 
-    <a
-      href={url}
-      target="_blank"
-      rel="noopener noreferrer nofollow sponsored"
-      class="btn-primary mt-4 self-start"
-    >
-      Check Price on Amazon
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/>
-      </svg>
-    </a>
+      <a
+        href={url}
+        target="_blank"
+        rel="noopener noreferrer nofollow sponsored"
+        class="btn btn-primary"
+        style="margin-top:1.125rem;justify-content:center;font-size:.82rem;"
+      >
+        Check Price on Amazon
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/>
+        </svg>
+      </a>
+    </div>
   </div>
 </div>
+
+<style>
+  @media (min-width: 520px) {
+    .aff-inner {
+      flex-direction: row !important;
+    }
+    .aff-inner > div:first-child {
+      width: 160px !important;
+      max-height: none !important;
+      border-bottom: none !important;
+      border-right: 1px solid rgba(232,160,32,.08) !important;
+    }
+  }
+</style>

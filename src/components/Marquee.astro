@@ -1,0 +1,26 @@
+---
+const items = [
+  { text: 'Tech', accent: true },
+  { text: 'Honest Takes' },
+  { text: 'Gear', accent: true },
+  { text: 'Affiliate Links Disclosed' },
+  { text: 'Trending', accent: true },
+  { text: 'No Sponsored Rankings' },
+  { text: 'Lifestyle', accent: true },
+  { text: 'Solo Marketer' },
+  { text: 'Real Reviews' },
+  { text: 'Tumbleweed0220', accent: true },
+];
+// double for seamless loop
+const doubled = [...items, ...items];
+---
+
+<div class="marquee-wrap" aria-hidden="true">
+  <div class="marquee-track">
+    {doubled.map((item) => (
+      <span class={`marquee-item${item.accent ? ' accent' : ''}`}>
+        {item.accent ? '◆ ' : '· '}{item.text}
+      </span>
+    ))}
+  </div>
+</div>
