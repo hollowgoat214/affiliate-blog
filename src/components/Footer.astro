@@ -29,7 +29,7 @@ const cats  = ['Tech','Trending','Gear','Lifestyle'];
             { label:'X/Twitter', icon:'<path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>' },
             { label:'Instagram', icon:'<rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/>' },
           ].map(s => (
-            <a href="#" aria-label={s.label} style="padding:.5rem;border-radius:6px;color:var(--dim);transition:color .2s,background .2s;" onmouseover="this.style.color='var(--accent)';this.style.background='var(--accent-dim)';" onmouseout="this.style.color='var(--dim)';this.style.background='transparent';">
+            <a href="#" aria-label={s.label} class="footer-social">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" set:html={s.icon}></svg>
             </a>
           ))}
@@ -41,7 +41,7 @@ const cats  = ['Tech','Trending','Gear','Lifestyle'];
         <p style="font-size:.62rem;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-bottom:1rem;">Categories</p>
         <ul style="list-style:none;display:flex;flex-direction:column;gap:.625rem;">
           {cats.map(c => (
-            <li><a href={`/category/${c}`} style="font-size:.8rem;color:var(--dim);text-decoration:none;transition:color .2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--dim)'">{c}</a></li>
+            <li><a href={`/category/${c}`} class="footer-link">{c}</a></li>
           ))}
         </ul>
       </div>
@@ -50,7 +50,7 @@ const cats  = ['Tech','Trending','Gear','Lifestyle'];
         <p style="font-size:.62rem;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-bottom:1rem;">Site</p>
         <ul style="list-style:none;display:flex;flex-direction:column;gap:.625rem;">
           {[['All Posts','/blog'],['About','/about'],['Disclosure','/disclosure']].map(([l,h]) => (
-            <li><a href={h} style="font-size:.8rem;color:var(--dim);text-decoration:none;transition:color .2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--dim)'">{l}</a></li>
+            <li><a href={h} class="footer-link">{l}</a></li>
           ))}
         </ul>
       </div>
@@ -59,7 +59,7 @@ const cats  = ['Tech','Trending','Gear','Lifestyle'];
     <div style="border-top:1px solid var(--border);margin-top:2.5rem;padding-top:1.5rem;display:flex;flex-direction:column;gap:.5rem;align-items:center;text-align:center;">
       <p style="font-size:.68rem;color:var(--dim);">&copy; {year} Tumbleweed0220. All rights reserved.</p>
       <p style="font-size:.65rem;color:var(--dim);">
-        <a href="/disclosure" style="color:var(--dim);transition:color .2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--dim)'">Affiliate Disclosure</a>
+        <a href="/disclosure" class="footer-link">Affiliate Disclosure</a>
         {' · '}
         This site earns commissions on some purchases.
       </p>
@@ -71,4 +71,13 @@ const cats  = ['Tech','Trending','Gear','Lifestyle'];
   @media (min-width: 640px) {
     .footer-grid { grid-template-columns: 2fr 1fr 1fr !important; }
   }
+  .footer-link {
+    font-size: .8rem; color: var(--dim); text-decoration: none; transition: color .2s;
+  }
+  .footer-link:hover { color: var(--accent); }
+  .footer-social {
+    padding: .5rem; border-radius: 6px;
+    color: var(--dim); transition: color .2s, background .2s;
+  }
+  .footer-social:hover { color: var(--accent); background: var(--accent-dim); }
 </style>

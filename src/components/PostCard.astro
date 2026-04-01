@@ -17,11 +17,10 @@ const delay = `${Math.min(index * 0.08, 0.4)}s`;
 ---
 
 <article
-  class="post-card reveal magnetic"
+  class="post-card reveal"
   style={`transition-delay:${delay};`}
   data-magnetic
 >
-  <!-- Image -->
   <a href={`/blog/${slug}`} class="post-card-img block" tabindex="-1" aria-hidden="true">
     {heroImage ? (
       <img
@@ -46,7 +45,6 @@ const delay = `${Math.min(index * 0.08, 0.4)}s`;
     )}
   </a>
 
-  <!-- Body -->
   <div class="p-5 flex flex-col flex-1">
     <div class="flex items-center gap-2 mb-3">
       <a href={`/category/${category}`} class="tag">{category}</a>
@@ -62,8 +60,3 @@ const delay = `${Math.min(index * 0.08, 0.4)}s`;
     <span class="mt-4 text-xs font-bold" style="color:var(--accent);">Read more →</span>
   </div>
 </article>
-
-<style>
-  .hover-amber-link { transition: color .2s ease; }
-  .hover-amber-link:hover { color: var(--accent); }
-</style>
