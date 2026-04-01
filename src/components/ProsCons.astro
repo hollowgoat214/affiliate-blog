@@ -12,7 +12,7 @@ const { pros, cons } = Astro.props;
     </p>
     <ul class="space-y-2.5">
       {pros.map(p => (
-        <li class="flex items-start gap-2 text-sm" style="color:#a0a090;">
+        <li class="flex items-start gap-2 text-sm" style="color:var(--muted);">
           <svg class="mt-0.5 shrink-0" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="3">
             <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
           </svg>{p}
@@ -29,7 +29,7 @@ const { pros, cons } = Astro.props;
     </p>
     <ul class="space-y-2.5">
       {cons.map(c => (
-        <li class="flex items-start gap-2 text-sm" style="color:#a0a090;">
+        <li class="flex items-start gap-2 text-sm" style="color:var(--muted);">
           <svg class="mt-0.5 shrink-0" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="3">
             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
           </svg>{c}

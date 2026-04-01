@@ -69,7 +69,7 @@ const fmt = (d: Date) => d.toLocaleDateString('en-US', { year:'numeric', month:'
             <a href={`/category/${category}`} class="tag">{category}</a>
           </div>
 
-          <h1 style="font-size:clamp(1.8rem,4.5vw,2.9rem);font-weight:900;line-height:1.12;letter-spacing:-.03em;color:#f0ebe3;margin-bottom:1rem;">
+          <h1 style="font-size:clamp(1.8rem,4.5vw,2.9rem);font-weight:900;line-height:1.12;letter-spacing:-.03em;color:var(--text);margin-bottom:1rem;">
             {title}
           </h1>
 
@@ -92,7 +92,7 @@ const fmt = (d: Date) => d.toLocaleDateString('en-US', { year:'numeric', month:'
         <!-- Pros / Cons -->
         {pros && cons && pros.length > 0 && cons.length > 0 && (
           <div style="margin-top:3rem;">
-            <h2 style="font-size:1.35rem;font-weight:900;letter-spacing:-.02em;color:#efe9e1;margin-bottom:1.25rem;">Pros &amp; Cons</h2>
+            <h2 style="font-size:1.35rem;font-weight:900;letter-spacing:-.02em;color:var(--text);margin-bottom:1.25rem;">Pros &amp; Cons</h2>
             <ProsCons pros={pros} cons={cons}/>
           </div>
         )}
@@ -100,7 +100,7 @@ const fmt = (d: Date) => d.toLocaleDateString('en-US', { year:'numeric', month:'
         <!-- Affiliate products -->
         {affiliateProducts && affiliateProducts.length > 0 && (
           <div style="margin-top:3.5rem;">
-            <h2 style="font-size:1.35rem;font-weight:900;letter-spacing:-.02em;color:#efe9e1;margin-bottom:.5rem;">Products in this review</h2>
+            <h2 style="font-size:1.35rem;font-weight:900;letter-spacing:-.02em;color:var(--text);margin-bottom:.5rem;">Products in this review</h2>
             <p style="font-size:.75rem;color:var(--dim);margin-bottom:1.5rem;">
               Affiliate links — I earn a small commission if you buy through them.
               <a href="/disclosure" class="disclosure-link">Full disclosure →</a>
@@ -129,43 +129,44 @@ const fmt = (d: Date) => d.toLocaleDateString('en-US', { year:'numeric', month:'
 /* ── Article typography ───────────────────────────── */
 .post-body :global(h2) {
   font-size: 1.45rem; font-weight: 900; letter-spacing: -.025em;
-  color: #efe9e1; margin: 2.5rem 0 .875rem; line-height: 1.2;
+  color: var(--text); margin: 2.5rem 0 .875rem; line-height: 1.2;
 }
 .post-body :global(h3) {
   font-size: 1.15rem; font-weight: 800;
-  color: #ddd8d0; margin: 2rem 0 .75rem;
+  color: var(--text); margin: 2rem 0 .75rem;
 }
 .post-body :global(p) {
-  color: #a09888; line-height: 1.85; margin-bottom: 1.25rem; font-size: 1rem;
+  color: var(--muted); line-height: 1.85; margin-bottom: 1.25rem; font-size: 1rem;
 }
 .post-body :global(a) {
   color: var(--accent); text-decoration: none;
-  border-bottom: 1px solid rgba(232,160,32,.3);
+  border-bottom: 1px solid rgba(13,212,170,.3);
   transition: border-color .2s, color .2s;
 }
 .post-body :global(a:hover) { color: var(--accent2); border-bottom-color: var(--accent); }
-.post-body :global(strong)  { color: #d8d0c4; font-weight: 700; }
+.post-body :global(strong)  { color: var(--text); font-weight: 700; }
 .post-body :global(ul), .post-body :global(ol) { margin-bottom: 1.25rem; padding-left: 1.5rem; }
-.post-body :global(li) { color: #a09888; line-height: 1.8; margin-bottom: .35rem; }
+.post-body :global(li) { color: var(--muted); line-height: 1.8; margin-bottom: .35rem; }
 .post-body :global(blockquote) {
-  border-left: 3px solid var(--accent); padding-left: 1.25rem;
-  margin: 1.75rem 0; color: #6e6560; font-style: italic;
+  border-left: 2px solid var(--accent); padding-left: 1.25rem;
+  margin: 1.75rem 0; color: var(--dim); font-style: italic;
 }
 .post-body :global(code) {
-  background: #111009; color: var(--accent); padding: .15rem .45rem;
-  border-radius: 4px; font-size: .875em; border: 1px solid var(--border2);
+  background: var(--surface2); color: var(--text); padding: .15rem .45rem;
+  border-radius: var(--radius-sm); font-size: .875em; border: 1px solid var(--border);
+  font-family: var(--mono);
 }
 .post-body :global(pre) {
-  background: #0e0d0b; border: 1px solid var(--border); border-radius: 10px;
+  background: var(--text); border: 1px solid var(--text); border-radius: var(--radius);
   padding: 1.25rem; overflow-x: auto; margin-bottom: 1.5rem;
 }
-.post-body :global(pre code)  { background: none; border: none; padding: 0; color: #c0b8ad; }
+.post-body :global(pre code)  { background: none; border: none; padding: 0; color: rgba(255,255,255,.8); font-family: var(--mono); }
 .post-body :global(hr)        { border: none; border-top: 1px solid var(--border); margin: 2.75rem 0; }
 .post-body :global(table)     { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; font-size: .88rem; }
-.post-body :global(th)        { text-align: left; font-weight: 800; color: #c8c0b8; padding: .6rem .875rem; border-bottom: 1px solid var(--border2); font-size: .72rem; text-transform: uppercase; letter-spacing: .06em; }
-.post-body :global(td)        { padding: .6rem .875rem; color: #8a8278; border-bottom: 1px solid var(--border); }
+.post-body :global(th)        { text-align: left; font-weight: 700; color: var(--text); padding: .6rem .875rem; border-bottom: 1px solid var(--border2); font-family: var(--mono); font-size: .65rem; text-transform: uppercase; letter-spacing: .08em; }
+.post-body :global(td)        { padding: .6rem .875rem; color: var(--muted); border-bottom: 1px solid var(--border); }
 .post-body :global(tr:last-child td) { border-bottom: none; }
-.post-body :global(img)       { border-radius: 10px; margin: 1.5rem 0; max-width: 100%; }
+.post-body :global(img)       { border-radius: var(--radius); margin: 1.5rem 0; max-width: 100%; }
 </style>
 
 <script>

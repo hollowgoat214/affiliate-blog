@@ -13,7 +13,7 @@ const { name, description, image, url, price, badge } = Astro.props;
 <div class="aff-card not-prose" style="display:flex;flex-direction:column;">
   <div style="display:flex;flex-direction:column;" class="aff-inner">
     <!-- image -->
-    <div style="flex-shrink:0;width:100%;max-height:160px;background:#0e0d0b;display:flex;align-items:center;justify-content:center;padding:1.5rem;border-bottom:1px solid rgba(232,160,32,.08);">
+    <div style="flex-shrink:0;width:100%;max-height:160px;background:var(--surface2);display:flex;align-items:center;justify-content:center;padding:1.5rem;border-bottom:1px solid var(--border);">
       <img src={image} alt={name} width="140" height="140" style="width:auto;height:120px;max-width:140px;object-fit:contain;" loading="lazy" decoding="async"/>
     </div>
 
@@ -24,7 +24,7 @@ const { name, description, image, url, price, badge } = Astro.props;
           {badge}
         </span>
       )}
-      <h4 style="font-size:1rem;font-weight:800;color:#e8e2da;margin-bottom:.25rem;letter-spacing:-.01em;">{name}</h4>
+      <h4 style="font-size:1rem;font-weight:800;color:var(--text);margin-bottom:.25rem;letter-spacing:-.01em;">{name}</h4>
       {price && <p style="font-size:.85rem;font-weight:700;color:var(--accent);margin-bottom:.5rem;">{price}</p>}
       <p style="font-size:.83rem;line-height:1.65;color:var(--muted);flex:1;">{description}</p>
 
@@ -53,7 +53,7 @@ const { name, description, image, url, price, badge } = Astro.props;
       width: 160px !important;
       max-height: none !important;
       border-bottom: none !important;
-      border-right: 1px solid rgba(232,160,32,.08) !important;
+      border-right: 1px solid var(--border) !important;
     }
   }
 </style>

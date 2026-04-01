@@ -9,58 +9,43 @@ const nav = [
 const path = Astro.url.pathname;
 ---
 
-<header id="site-header" style="position:sticky;top:0;z-index:50;background:rgba(11,10,9,0.82);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid transparent;transition:border-color .3s;">
+<header id="site-header" style="position:sticky;top:0;z-index:50;background:rgba(245,244,240,0.90);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid transparent;transition:border-color .3s;">
   <div class="container flex items-center justify-between h-14">
 
     <!-- Logo -->
-    <a href="/" class="flex items-center gap-2.5 select-none group" aria-label="Tumbleweed0220 home">
-      <!-- Tumbleweed SVG logo -->
-      <div class="relative w-8 h-8 flex-shrink-0">
-        <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full" style="animation: spin-slow 18s linear infinite;">
-          <ellipse cx="18" cy="18" rx="16" ry="7"  stroke="#e8a020" stroke-width="1.4" opacity=".9"/>
-          <ellipse cx="18" cy="18" rx="16" ry="7"  stroke="#e8a020" stroke-width="1.4" opacity=".5" transform="rotate(45 18 18)"/>
-          <ellipse cx="18" cy="18" rx="16" ry="7"  stroke="#e8a020" stroke-width="1.4" opacity=".5" transform="rotate(90 18 18)"/>
-          <ellipse cx="18" cy="18" rx="16" ry="7"  stroke="#e8a020" stroke-width="1.4" opacity=".5" transform="rotate(135 18 18)"/>
-          <circle  cx="18" cy="18" r="3.5" fill="#e8a020"/>
-          <!-- small dots at extremities -->
-          <circle cx="18" cy="2"  r="1.2" fill="#e8a020" opacity=".5"/>
-          <circle cx="18" cy="34" r="1.2" fill="#e8a020" opacity=".5"/>
-          <circle cx="2"  cy="18" r="1.2" fill="#e8a020" opacity=".5"/>
-          <circle cx="34" cy="18" r="1.2" fill="#e8a020" opacity=".5"/>
+    <a href="/" class="flex items-center gap-2.5 select-none" aria-label="Tumbleweed0220 home">
+      <div class="relative flex-shrink-0" style="width:28px;height:28px;">
+        <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" width="28" height="28" style="animation:spin-slow 22s linear infinite;">
+          <ellipse cx="18" cy="18" rx="16" ry="6.5" stroke="var(--accent)" stroke-width="1.5" opacity="1"/>
+          <ellipse cx="18" cy="18" rx="16" ry="6.5" stroke="var(--accent)" stroke-width="1.5" opacity=".5" transform="rotate(45 18 18)"/>
+          <ellipse cx="18" cy="18" rx="16" ry="6.5" stroke="var(--accent)" stroke-width="1.5" opacity=".5" transform="rotate(90 18 18)"/>
+          <ellipse cx="18" cy="18" rx="16" ry="6.5" stroke="var(--accent)" stroke-width="1.5" opacity=".5" transform="rotate(135 18 18)"/>
+          <circle cx="18" cy="18" r="3" fill="var(--accent)"/>
         </svg>
       </div>
-      <div class="flex flex-col leading-none">
-        <span class="font-black text-sm tracking-tight" style="color:#f0ebe3;letter-spacing:-.03em;">
-          TUMBLEWEED
-        </span>
-        <span class="font-black text-xs" style="color:var(--accent);letter-spacing:.05em;">0220</span>
+      <div style="display:flex;flex-direction:column;line-height:1;gap:1px;">
+        <span style="font-family:var(--mono);font-size:.7rem;font-weight:700;letter-spacing:.08em;color:var(--text);">TUMBLEWEED</span>
+        <span style="font-family:var(--mono);font-size:.62rem;font-weight:700;letter-spacing:.12em;color:var(--accent);">0220</span>
       </div>
     </a>
 
     <!-- Desktop nav -->
-    <nav class="hidden md:flex items-center gap-0.5">
+    <nav class="hidden md:flex items-center gap-1">
       {nav.map((link) => (
         <a
           href={link.href}
-          class={`relative px-3.5 py-1.5 text-[.8rem] font-semibold rounded-md transition-all duration-200 nav-link ${
-            path.startsWith(link.href)
-              ? 'active'
-              : ''
-          }`}
-          style={path.startsWith(link.href)
-            ? 'color:var(--accent);background:var(--accent-dim);'
-            : 'color:var(--muted);'}
+          class={`nav-link${path.startsWith(link.href) ? ' active' : ''}`}
         >
           {link.label}
         </a>
       ))}
-      <a href="/blog" class="btn btn-primary ml-3 text-xs px-4 py-1.5">
+      <a href="/blog" class="btn btn-primary ml-3" style="font-size:.7rem;padding:.45rem 1rem;min-height:34px;">
         All Reviews →
       </a>
     </nav>
 
     <!-- Mobile toggle -->
-    <button id="nav-btn" class="md:hidden p-2 rounded-lg transition-colors" style="color:var(--muted);" aria-label="Menu" aria-expanded="false">
+    <button id="nav-btn" class="md:hidden p-2" style="color:var(--muted);" aria-label="Menu" aria-expanded="false">
       <svg id="icon-open"  width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
         <path stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16"/>
       </svg>
@@ -71,31 +56,51 @@ const path = Astro.url.pathname;
   </div>
 
   <!-- Mobile menu -->
-  <div id="nav-mobile" style="display:none; border-top:1px solid var(--border);">
-    <nav class="container py-3 flex flex-col gap-1">
+  <div id="nav-mobile" style="display:none;border-top:1px solid var(--border);background:var(--surface);">
+    <nav class="container py-3 flex flex-col gap-0.5">
       {nav.map((link) => (
-        <a href={link.href} class="px-3 py-2.5 rounded-lg text-sm font-semibold transition-all"
-          style={path.startsWith(link.href)
-            ? 'color:var(--accent);background:var(--accent-dim);'
-            : 'color:var(--muted);'}
-        >
+        <a href={link.href} class={`mobile-link${path.startsWith(link.href) ? ' active' : ''}`}>
           {link.label}
         </a>
       ))}
-      <a href="/blog" class="btn btn-primary mt-2 text-sm justify-center">All Reviews →</a>
+      <a href="/blog" class="btn btn-primary mt-3 justify-center" style="font-size:.75rem;">All Reviews →</a>
     </nav>
   </div>
 </header>
 
 <style>
-  .nav-link:not(.active):hover {
-    color: var(--text) !important;
-    background: rgba(255,255,255,.04);
+  .nav-link {
+    font-family: var(--mono);
+    font-size: .68rem;
+    font-weight: 700;
+    letter-spacing: .04em;
+    padding: .375rem .75rem;
+    border-radius: var(--radius-sm);
+    color: var(--muted);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color .18s, background .18s;
   }
+  .nav-link:hover { color: var(--text); background: rgba(0,0,0,.04); }
+  .nav-link.active { color: var(--accent); background: var(--accent-dim); }
+
+  .mobile-link {
+    font-family: var(--mono);
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    padding: .625rem .75rem;
+    border-radius: var(--radius-sm);
+    color: var(--muted);
+    text-decoration: none;
+    transition: color .18s, background .18s;
+  }
+  .mobile-link:hover { color: var(--text); background: rgba(0,0,0,.04); }
+  .mobile-link.active { color: var(--accent); background: var(--accent-dim); }
 </style>
 
 <script>
-  // Mobile menu
   const btn   = document.getElementById('nav-btn');
   const menu  = document.getElementById('nav-mobile');
   const open  = document.getElementById('icon-open');
@@ -109,11 +114,10 @@ const path = Astro.url.pathname;
     btn?.setAttribute('aria-expanded', String(!isOpen));
   });
 
-  // Header border on scroll
   const header = document.getElementById('site-header');
   window.addEventListener('scroll', () => {
     if (header) {
-      header.style.borderBottomColor = window.scrollY > 20
+      header.style.borderBottomColor = window.scrollY > 16
         ? 'var(--border)'
         : 'transparent';
     }
