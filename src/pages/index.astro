@@ -24,8 +24,8 @@ const cats = [
 
   <!-- ── Hero ───────────────────────────────────────────────── -->
   <section style="position:relative;overflow:hidden;border-bottom:1px solid var(--border);padding:6rem 0 5rem;background:var(--surface);">
-    <!-- Dot grid — fades toward left -->
-    <div class="dot-grid" style="mask-image:radial-gradient(ellipse 70% 100% at 85% 50%,black 0%,transparent 100%);-webkit-mask-image:radial-gradient(ellipse 70% 100% at 85% 50%,black 0%,transparent 100%);"></div>
+    <!-- Dot grid — parallax, fades toward left -->
+    <div id="hero-dot-grid" class="dot-grid" style="mask-image:radial-gradient(ellipse 70% 100% at 85% 50%,black 0%,transparent 100%);-webkit-mask-image:radial-gradient(ellipse 70% 100% at 85% 50%,black 0%,transparent 100%);will-change:transform;"></div>
 
     <div class="container" style="position:relative;">
       <div class="reveal" style="max-width:680px;">
@@ -35,9 +35,9 @@ const cats = [
           Solo Affiliate Blog
         </div>
 
-        <h1 style="font-size:clamp(2.8rem,7vw,5.5rem);font-weight:900;line-height:1.04;letter-spacing:-.04em;color:var(--text);margin-bottom:1.5rem;">
-          Find what's actually<br/>
-          <span style="color:var(--accent);">worth&nbsp;buying.</span>
+        <h1 id="hero-heading" style="font-size:clamp(2.8rem,7vw,5.5rem);font-weight:900;line-height:1.04;letter-spacing:-.04em;color:var(--text);margin-bottom:1.5rem;">
+          <span id="hero-line-1">Find what's actually</span><br/>
+          <span style="color:var(--accent);" id="hero-line-2">worth&nbsp;buying.</span>
         </h1>
 
         <p style="font-size:1.1rem;line-height:1.8;color:var(--muted);max-width:480px;margin-bottom:2.25rem;">
@@ -58,12 +58,12 @@ const cats = [
       <!-- Stats -->
       <div class="reveal reveal-delay-3" style="display:flex;flex-wrap:wrap;gap:2rem 3rem;margin-top:4rem;padding-top:2rem;border-top:1px solid var(--border);">
         {[
-          { n: '3',    label: 'Reviews live' },
-          { n: '100%', label: 'Disclosed links' },
-          { n: '1',    label: 'Author' },
+          { n: '3',    raw: 3,   label: 'Reviews live' },
+          { n: '100%', raw: 100, label: 'Disclosed links', pct: true },
+          { n: '1',    raw: 1,   label: 'Author' },
         ].map(s => (
           <div>
-            <div style="font-family:var(--mono);font-size:1.5rem;font-weight:700;color:var(--text);letter-spacing:-.02em;">{s.n}</div>
+            <div data-count={s.raw} data-count-pct={s.pct ? 'true' : undefined} style="font-family:var(--mono);font-size:1.5rem;font-weight:700;color:var(--text);letter-spacing:-.02em;">{s.n}</div>
             <div style="font-family:var(--mono);font-size:.56rem;font-weight:700;color:var(--dim);text-transform:uppercase;letter-spacing:.14em;margin-top:.3rem;">{s.label}</div>
           </div>
         ))}
@@ -233,3 +233,75 @@ const cats = [
     .cats-grid { grid-template-columns: repeat(4, 1fr) !important; }
   }
 </style>
+
+<script>
+  // ─── Scramble text ─────────────────────────────────────────────
+  function scramble(el: HTMLElement, final: string, delay = 0) {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789·—/\\|';
+    let frame = 0;
+    const totalFrames = 28;
+    setTimeout(() => {
+      const id = setInterval(() => {
+        frame++;
+        el.textContent = final.split('').map((c, i) => {
+          if (c === ' ' || c === '\u00a0') return c;
+          return frame / totalFrames > i / final.length
+            ? c
+            : chars[Math.floor(Math.random() * chars.length)];
+        }).join('');
+        if (frame >= totalFrames) { clearInterval(id); el.textContent = final; }
+      }, 16);
+    }, delay);
+  }
+
+  // ─── Count-up numbers ──────────────────────────────────────────
+  function countUp(el: HTMLElement) {
+    const target  = parseInt(el.dataset.count ?? '0');
+    const isPct   = el.dataset.countPct === 'true';
+    const dur     = 1600;
+    let start: number | null = null;
+    (function step(ts: number) {
+      if (!start) start = ts;
+      const p    = Math.min((ts - start) / dur, 1);
+      const ease = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(ease * target) + (isPct ? '%' : '');
+      if (p < 1) requestAnimationFrame(step);
+    })(performance.now());
+  }
+
+  // ─── Hero dot grid parallax ────────────────────────────────────
+  const heroGrid = document.getElementById('hero-dot-grid');
+  if (heroGrid) {
+    window.addEventListener('scroll', () => {
+      heroGrid.style.transform = `translateY(${window.scrollY * 0.22}px)`;
+    }, { passive: true });
+  }
+
+  // ─── Wire everything up once hero is visible ───────────────────
+  const line1 = document.getElementById('hero-line-1') as HTMLElement | null;
+  const line2 = document.getElementById('hero-line-2') as HTMLElement | null;
+
+  if (line1 || line2) {
+    const heroObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          if (line1) scramble(line1, "Find what's actually", 200);
+          if (line2) scramble(line2, 'worth\u00a0buying.', 460);
+          heroObs.disconnect();
+        }
+      });
+    }, { threshold: 0.5 });
+    const heading = document.getElementById('hero-heading');
+    if (heading) heroObs.observe(heading);
+  }
+
+  // ─── Stat count-up on scroll into view ────────────────────────
+  document.querySelectorAll<HTMLElement>('[data-count]').forEach(el => {
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { countUp(el); obs.disconnect(); }
+      });
+    }, { threshold: 0.7 });
+    obs.observe(el);
+  });
+</script>

@@ -63,23 +63,75 @@ a   { color: inherit; }
 ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 4px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--dim); }
 
+/* ─── Mouse spotlight ────────────────────────────────────────── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(13,212,170,.055), transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ─── Custom cursor ──────────────────────────────────────────── */
+@media (pointer: fine) {
+  * { cursor: none !important; }
+}
+#cursor-dot {
+  position: fixed;
+  top: 0; left: 0;
+  width: 7px; height: 7px;
+  background: var(--accent);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 999999;
+  will-change: transform;
+}
+#cursor-ring {
+  position: fixed;
+  top: 0; left: 0;
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  border: 1.5px solid var(--accent);
+  pointer-events: none;
+  z-index: 999998;
+  will-change: transform;
+  opacity: .5;
+  transition: width .22s var(--ease-calm), height .22s var(--ease-calm),
+              opacity .22s ease, border-color .22s ease, background .22s ease;
+}
+body.cursor-hover #cursor-ring {
+  width: 48px; height: 48px;
+  background: rgba(13,212,170,.06);
+  border-color: var(--accent);
+  opacity: .7;
+}
+body.cursor-click #cursor-dot { transform-origin: center !important; }
+body.cursor-click #cursor-ring { width: 20px; height: 20px; opacity: 1; background: rgba(13,212,170,.15); }
+@media (pointer: coarse) {
+  #cursor-dot, #cursor-ring { display: none !important; }
+}
+
 /* ─── Keyframes ──────────────────────────────────────────────── */
 @keyframes fadeIn    { from { opacity: 0 }                               to { opacity: 1 } }
 @keyframes fadeUp    { from { opacity: 0; transform: translateY(14px) }  to { opacity: 1; transform: translateY(0) } }
 @keyframes marquee   { from { transform: translateX(0) }                 to { transform: translateX(-50%) } }
 @keyframes spin-slow { to   { transform: rotate(360deg) } }
 @keyframes blink     { 0%,100% { opacity: 1 } 50% { opacity: 0 } }
-@keyframes cursor-blink { 0%,100% { border-color: var(--accent) } 50% { border-color: transparent } }
+@keyframes float-y   { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-8px) } }
+@keyframes shimmer-in { from { transform: translateX(-120%) skewX(-8deg) } to { transform: translateX(320%) skewX(-8deg) } }
 
 /* ─── Scroll reveal ──────────────────────────────────────────── */
 .reveal {
   opacity: 0;
-  transform: translateY(14px);
+  transform: translateY(18px);
+  filter: blur(5px);
   transition:
-    opacity   .48s var(--ease-calm),
-    transform .48s var(--ease-calm);
+    opacity   .6s var(--ease-calm),
+    transform .6s var(--ease-calm),
+    filter    .6s var(--ease-calm);
 }
-.reveal.is-visible      { opacity: 1; transform: translateY(0); }
+.reveal.is-visible      { opacity: 1; transform: translateY(0); filter: none; }
 .reveal-delay-1         { transition-delay: .06s; }
 .reveal-delay-2         { transition-delay: .12s; }
 .reveal-delay-3         { transition-delay: .18s; }
@@ -109,6 +161,21 @@ a   { color: inherit; }
   box-shadow:
     0 12px 28px -8px rgba(0,0,0,.12),
     0 0 0 1px var(--accent);
+}
+
+/* Card shine sweep on hover */
+.post-card::before {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 0; width: 45%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.09), transparent);
+  transform: translateX(-160%) skewX(-8deg);
+  pointer-events: none;
+  z-index: 4;
+}
+.post-card:hover::before {
+  animation: shimmer-in .65s ease forwards;
 }
 
 /* Card image */

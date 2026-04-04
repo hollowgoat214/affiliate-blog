@@ -79,10 +79,23 @@ const path = Astro.url.pathname;
     color: var(--muted);
     text-decoration: none;
     text-transform: uppercase;
-    transition: color .18s, background .18s;
+    transition: color .18s;
+    position: relative;
+    overflow: hidden;
   }
-  .nav-link:hover { color: var(--text); background: rgba(0,0,0,.04); }
-  .nav-link.active { color: var(--accent); background: var(--accent-dim); }
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 2px; left: 50%;
+    width: 0; height: 1.5px;
+    background: var(--accent);
+    border-radius: 2px;
+    transition: width .22s var(--ease-calm), left .22s var(--ease-calm);
+  }
+  .nav-link:hover { color: var(--text); }
+  .nav-link:hover::after { width: calc(100% - 1.5rem); left: .75rem; }
+  .nav-link.active { color: var(--accent); }
+  .nav-link.active::after { width: calc(100% - 1.5rem); left: .75rem; }
 
   .mobile-link {
     font-family: var(--mono);
